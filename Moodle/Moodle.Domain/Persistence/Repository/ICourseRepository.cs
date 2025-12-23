@@ -1,4 +1,4 @@
-﻿using Moodle.Domain.Entities;
+﻿using Moodle.Domain.Entities.Course;
 
 namespace Moodle.Domain.Persistence.Repository
 {

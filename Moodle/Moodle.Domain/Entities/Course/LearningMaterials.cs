@@ -1,6 +1,6 @@
 ﻿using Moodle.Domain.Common.Entities;
 
-namespace Moodle.Domain.Entities
+namespace Moodle.Domain.Entities.Course
 {
     public class LearningMaterials : BaseEntity
     {
