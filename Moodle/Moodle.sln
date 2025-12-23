@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moodle.Domain", "Moodle.Domain\Moodle.Domain.csproj", "{2F021461-AC69-4C81-A3BE-B55076E1DCEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moodle.Application", "Moodle.Application\Moodle.Application.csproj", "{AE5CBE42-EA24-4AF2-A1DD-23015DFF5FB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moodle.Infrastructure", "Moodle.Infrastructure\Moodle.Infrastructure.csproj", "{17BB4E25-518A-4DDF-B55B-DD6848B21482}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{2F021461-AC69-4C81-A3BE-B55076E1DCEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F021461-AC69-4C81-A3BE-B55076E1DCEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F021461-AC69-4C81-A3BE-B55076E1DCEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5CBE42-EA24-4AF2-A1DD-23015DFF5FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5CBE42-EA24-4AF2-A1DD-23015DFF5FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5CBE42-EA24-4AF2-A1DD-23015DFF5FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5CBE42-EA24-4AF2-A1DD-23015DFF5FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17BB4E25-518A-4DDF-B55B-DD6848B21482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17BB4E25-518A-4DDF-B55B-DD6848B21482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17BB4E25-518A-4DDF-B55B-DD6848B21482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17BB4E25-518A-4DDF-B55B-DD6848B21482}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
