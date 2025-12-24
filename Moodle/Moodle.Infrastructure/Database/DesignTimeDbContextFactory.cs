@@ -11,6 +11,7 @@ namespace Moodle.Infrastructure.Database
 
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..", "Moodle.Presentation"))
+                .AddUserSecrets<DesignTimeDbContextFactory>()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
