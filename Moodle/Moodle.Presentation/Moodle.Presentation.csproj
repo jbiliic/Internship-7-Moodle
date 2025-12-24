@@ -12,4 +12,8 @@
 		<ProjectReference Include="..\Moodle.Domain\Moodle.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Menus\" />
+	</ItemGroup>
+
 </Project>

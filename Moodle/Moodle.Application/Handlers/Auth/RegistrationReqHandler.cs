@@ -1,0 +1,55 @@
+﻿using Moodle.Application.Common;
+using Moodle.Application.Common.Model;
+using Moodle.Application.DTO;
+using Moodle.Application.DTO.Auth;
+using Moodle.Domain.Persistence.Repository;
+using Moodle.Domain.Services.Validation;
+
+namespace Moodle.Application.Handlers.Auth
+{
+    public class RegistrationReqHandler
+    {
+        private readonly IUserRepository _userRepo;
+        private readonly UserValidationService _userValidationService;
+        private readonly IMoodleDbContext _context;
+        public RegistrationReqHandler(IUserRepository userRepo , UserValidationService service , IMoodleDbContext context)
+        {
+            _userRepo = userRepo;
+            _userValidationService = service;
+            _context = context;
+        }
+        private async Task<Resault<SuccessResponse<UserDTO>>> ExecuteRegistration(UserRegistrationReq req, Resault<SuccessResponse<UserDTO>> res)
+        {
+            var user = new Domain.Entities.User
+            {
+                FirstName = req.FirstName,
+                LastName = req.LastName,
+                Email = req.Email,
+                Password = req.Password,
+                DateOfBirth = req.BirthDate
+            };
+            var validationResault = await _userValidationService.ValidateUser(user);
+            res.setValidationResault(validationResault);
+            if (validationResault.HasErrors)
+            {
+                res.setValue(new SuccessResponse<UserDTO> { IsSuccess = false, Value = null });
+                return res;
+            }
+            await _userRepo.InsertAsync(user);
+            var userDto = new UserDTO
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                Email = user.Email
+            };
+            res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Value = userDto , Id = user.Id });
+            await _context.SaveChangesAsync();
+            return res;
+        }
+        public async Task<Resault<SuccessResponse<UserDTO>>> HandleRegistration(UserRegistrationReq req)
+        {
+            var res = new Resault<SuccessResponse<UserDTO>>();
+            return await ExecuteRegistration(req, res);
+        }
+    }
+}

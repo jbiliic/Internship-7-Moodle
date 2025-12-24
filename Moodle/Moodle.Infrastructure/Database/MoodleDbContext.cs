@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Moodle.Application.Common;
 using Moodle.Domain.Entities;
 using Moodle.Domain.Entities.Course;
 
 namespace Moodle.Infrastructure.Database
 {
-    public sealed class MoodleDbContext : DbContext
+    public sealed class MoodleDbContext : DbContext , IMoodleDbContext
     {
         public MoodleDbContext(DbContextOptions<MoodleDbContext> options) : base(options)
         {

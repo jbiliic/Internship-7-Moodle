@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Moodle.Domain\Moodle.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Handlers\" />
-  </ItemGroup>
-
 </Project>
