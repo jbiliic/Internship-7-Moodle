@@ -8,12 +8,23 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Moodle.Application\Moodle.Application.csproj" />
-		<ProjectReference Include="..\Moodle.Domain\Moodle.Domain.csproj" />
+	  <None Remove="appsettings.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Menus\" />
+	  <Content Include="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Moodle.Application\Moodle.Application.csproj" />
+		<ProjectReference Include="..\Moodle.Domain\Moodle.Domain.csproj" />
+		<ProjectReference Include="..\Moodle.Infrastructure\Moodle.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

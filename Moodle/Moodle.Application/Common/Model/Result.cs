@@ -8,7 +8,7 @@ namespace Moodle.Application.Common.Model
         private List<ValidationResaultItem> _warnings = new List<ValidationResaultItem>();
         private List<ValidationResaultItem> _errors = new List<ValidationResaultItem>();
 
-        public TValue? Value { get; set; }
+        public TValue Value { get; set; }
         public Guid ReqId { get; init; } = Guid.NewGuid();
 
         public IReadOnlyList<ValidationResaultItem> Infos

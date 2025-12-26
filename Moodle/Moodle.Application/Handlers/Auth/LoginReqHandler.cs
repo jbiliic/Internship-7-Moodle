@@ -19,16 +19,11 @@ namespace Moodle.Application.Handlers.Auth
             var user = await _userRepo.AuthenticateUserAsync(email, passw);
             if (user == null)
             {
-                res.setValue(new SuccessResponse<UserDTO> {IsSuccess = false , Value = null });
+                res.setValue(new SuccessResponse<UserDTO> {IsSuccess = false , Item = null });
                 return res;
             }
-            var userDto = new UserDTO
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                Email = user.Email
-            };
-            res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Value = userDto , Id = user.Id });
+            var userDto = new UserDTO(user);
+            res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Item = userDto , Id = user.Id });
             return res;
         }
         public async Task<Resault<SuccessResponse<UserDTO>>> HandleLogin(UserLoginReq req)

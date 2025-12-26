@@ -32,17 +32,12 @@ namespace Moodle.Application.Handlers.Auth
             res.setValidationResault(validationResault);
             if (validationResault.HasErrors)
             {
-                res.setValue(new SuccessResponse<UserDTO> { IsSuccess = false, Value = null });
+                res.setValue(new SuccessResponse<UserDTO> { IsSuccess = false, Item = null });
                 return res;
             }
             await _userRepo.InsertAsync(user);
-            var userDto = new UserDTO
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                Email = user.Email
-            };
-            res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Value = userDto , Id = user.Id });
+            var userDto = new UserDTO(user);
+            res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Item = userDto , Id = user.Id });
             await _context.SaveChangesAsync();
             return res;
         }
