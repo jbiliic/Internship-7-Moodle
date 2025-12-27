@@ -19,5 +19,11 @@ namespace Moodle.Domain.Persistence.Repository
                 .Where(m => m.ConversationId == conversationId)
                 .ToListAsync();
         }
+        public async Task<Conversation?> GetConversationBetweenUsersAsync(int user1Id, int user2Id)
+        {
+            return await _context.Conversations
+                .FirstOrDefaultAsync(c => 
+                    (c.User1Id == user1Id && c.User2Id == user2Id));
+        }
     }
 }

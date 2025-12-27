@@ -1,7 +1,8 @@
-﻿using Moodle.Domain.Entities.Course;
+﻿using Moodle.Domain.Common.Entities;
+using Moodle.Domain.Entities.Course;
 namespace Moodle.Domain.Entities
 {
-    public class IsEnrolled
+    public class IsEnrolled : BaseEntity
     {
         public int UserId { get; set; }
         public int CourseId { get; set; }

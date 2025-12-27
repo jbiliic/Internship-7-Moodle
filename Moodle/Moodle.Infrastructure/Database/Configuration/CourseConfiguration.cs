@@ -41,6 +41,16 @@ namespace Moodle.Infrastructure.Database.Configurations.Course
                 .WithMany()
                 .HasForeignKey(c => c.ProfessorId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(u => u.CreatedAt)
+                .HasColumnName("created_at")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAdd();
+
+            builder.Property(u => u.UpdatedAt)
+                .HasColumnName("updated_at")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAddOrUpdate();
         }
     }
 }

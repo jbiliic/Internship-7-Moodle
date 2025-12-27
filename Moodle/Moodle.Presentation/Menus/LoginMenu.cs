@@ -2,18 +2,20 @@
 using Moodle.Application.Handlers.Auth;
 namespace Moodle.Presentation.Menus
 {
-    internal class LoginMenu
+    internal class LoginMenu : IMenu
     {
         private readonly LoginReqHandler _loginHandler;
         private readonly RegistrationReqHandler _registrationHandler;
-        public LoginMenu(LoginReqHandler loginHandler, RegistrationReqHandler registrationHandler)
+        private readonly MenuRouter _router;
+        public LoginMenu(LoginReqHandler loginHandler, RegistrationReqHandler registrationHandler , MenuRouter router)
         {
             _loginHandler = loginHandler;
             _registrationHandler = registrationHandler;
+            _router = router;
         }
-        public async Task Handle()
+        public async Task Show(UserDTO? currUser)
         {
-            UserDTO currUser = null;
+            currUser = null;
             while (true)
             {
                 Console.WriteLine("Welcome to Moodle!");
@@ -27,13 +29,13 @@ namespace Moodle.Presentation.Menus
                         currUser =  await LoginSubMenu();
                         if (currUser == null)
                             break;
-                        
+                        await _router.NavigateTo<MainMenu>(currUser);
                         break;
                     case '2':
                         currUser = await RegisterSubMenu();
                         if (currUser == null)
                             break;
-                        
+                        await _router.NavigateTo<MainMenu>(currUser);
                         break;
                     case '0':
                         Console.WriteLine("Exiting...");

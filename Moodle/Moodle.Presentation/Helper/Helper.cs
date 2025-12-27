@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Security.Cryptography;
+using Moodle.Application.DTO;
 
 namespace Moodle.Presentation.Helper
 {
@@ -15,7 +16,6 @@ namespace Moodle.Presentation.Helper
         {
             while (true)
             {
-                Console.Clear();
                 Console.Write($"\nEnter {inputType}: ");
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn))
@@ -32,7 +32,6 @@ namespace Moodle.Presentation.Helper
         {
             while (true)
             {
-                Console.Clear();
                 Console.Write($"\nEnter {inputType}: ");
                 var toReturn = Console.ReadLine();
                 return toReturn;
@@ -40,9 +39,7 @@ namespace Moodle.Presentation.Helper
         }
         public static DateTimeOffset? getDateOfBirth(string inputType)
         {
-           
-                Console.Clear();
-                Console.Write($"Unesite {inputType} u formatu dd-mm-yyyy: ");
+                Console.Write($"Enter {inputType} like dd-mm-yyyy: ");
                 var input = Console.ReadLine();
                 if (DateTimeOffset.TryParseExact(
                 input,
@@ -90,6 +87,35 @@ namespace Moodle.Presentation.Helper
             }
 
             return new string(result);
+        }
+        public static int getAndValidateInputInt(string inputType)
+        {
+            while (true)
+            {
+                Console.Write($"Enter {inputType}: ");
+                var toReturn = Console.ReadLine();
+                if(int.TryParse(toReturn, out var result))
+                {
+                    return result;
+                }
+                else
+                {
+                    Helper.clearDisplAndDisplMessage($"{inputType} must be a valid integer.");
+                }
+            }
+        }
+        public static void renderMessages(IReadOnlyList<MessageDTO> messages, int otherUserId) {
+            foreach (var message in messages)
+            {
+                if (message.SenderId == otherUserId)
+                {
+                    Console.WriteLine($"Title: {message.Title} \n Content: {message.Content} \nSent at: {message.SentAt}");
+                }
+                else
+                {
+                    Console.WriteLine($"\t\t\t\t\tTitle: {message.Title} \n\t\t\t\t\tContent: {message.Content} \n\t\t\t\t\tSent at: {message.SentAt}");
+                }
+            }
         }
     }
 }

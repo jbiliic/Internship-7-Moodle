@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moodle.Domain.Persistence.Repository.Common;
+using Moodle.Infrastructure.Database;
 
 namespace Moodle.Infrastructure.Repository.Common
 {
     public class Repository<TEntity, Tvalue> : IRepository<TEntity, Tvalue> where TEntity : class
     {
-        private readonly DbContext _context;
+        private readonly MoodleDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
-        public Repository(DbContext context)
+        public Repository(MoodleDbContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();

@@ -7,7 +7,7 @@
         public const string RegexMailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
 
         public int Id { get; set; }
-        DateTimeOffset CreatedAt { get; set; }
-        DateTimeOffset UpdatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }

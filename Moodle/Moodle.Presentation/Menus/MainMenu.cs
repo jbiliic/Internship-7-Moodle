@@ -1,6 +1,122 @@
-﻿namespace Moodle.Presentation.Menus
+﻿using Moodle.Application.DTO;
+
+namespace Moodle.Presentation.Menus
 {
-    internal class MainMenu
+    internal class MainMenu : IMenu
     {
+        private readonly MenuRouter _router;
+        public MainMenu(MenuRouter router)
+        {
+            _router = router;
+        }
+        public static Dictionary<char, string> studentMenuOptions = new Dictionary<char, string>
+        {
+            { '1', "Moji kolegiji" },
+            { '2', "Privatni chat" },
+            { '0', "Odjava / Povratak" }
+        };
+        public static Dictionary<char, string> professorMenuOptions = new Dictionary<char, string>
+        {
+            { '1', "Moji kolegiji" },
+            { '2', "Privatni chat" },
+            { '3', "Upravljanje kolegija" },
+            { '0', "Odjava / Povratak" }
+        };
+        public static Dictionary<char, string> adminMenuOptions { get; } = new Dictionary<char, string>
+        {
+            { '1', "Upravljanje korisnicima" },
+            { '2', "Privatni chat" },
+            { '0', "Odjava / Povratak" }
+        };
+
+       
+
+        public  async Task Show(UserDTO currUser) {
+            var options = new Dictionary<char, string>();
+            if (currUser.isAdministrator) {
+                options = adminMenuOptions;
+            }
+            else if (currUser.isProfessor) {
+                options = professorMenuOptions;
+            }
+            else {
+                options = studentMenuOptions;
+            }
+
+            while (true)
+            {
+                Console.Clear();
+
+                foreach (var option in options)
+                {
+                    Console.WriteLine($"{option.Key}. {option.Value}");
+                }
+                Console.Write("Select an option: ");
+
+                var input = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                if (input == '0')
+                    return;
+
+                if (currUser.isAdministrator)
+                {
+                    switch (input)
+                    {
+                        case '1':
+                            //await _router.NavigateTo<ManageUsersMenu>(currUser);
+                            break;
+
+                        case '2':
+                            await _router.NavigateTo<ChatMenu>(currUser);
+                            break;
+
+                        default:
+                            Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                            break;
+                    }
+                }
+                else if (currUser.isProfessor)
+                {
+                    switch (input)
+                    {
+                        case '1':
+                            //await _router.NavigateTo<MyCoursesMenu>(currUser);
+                            break;
+
+                        case '2':
+                            await _router.NavigateTo<ChatMenu>(currUser);
+                            break;
+
+                        case '3':
+                            //await _router.NavigateTo<ManageCoursesMenu>(currUser);
+                            break;
+
+                        default:
+                            Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                            break;
+                    }
+                }
+                else 
+                {
+                    switch (input)
+                    {
+                        case '1':
+                            //await _router.NavigateTo<MyCoursesMenu>(currUser);
+                            break;
+
+                        case '2':
+                            await _router.NavigateTo<ChatMenu>(currUser);
+                            break;
+
+                        default:
+                            Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                            break;
+                    }
+                }
+            }
+        }
     }
+
 }
+

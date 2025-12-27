@@ -26,6 +26,9 @@ namespace Moodle.Infrastructure.Database.Configurations
             builder.HasIndex(c => new { c.User1Id, c.User2Id })
                 .IsUnique();
 
+            builder.HasIndex(c => c.User1Id);
+            builder.HasIndex(c => c.User2Id);
+
             builder.HasOne(c => c.User1)
                 .WithMany()
                 .HasForeignKey(c => c.User1Id)
@@ -35,6 +38,16 @@ namespace Moodle.Infrastructure.Database.Configurations
                 .WithMany()
                 .HasForeignKey(c => c.User2Id)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(u => u.CreatedAt)
+                .HasColumnName("created_at")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAdd();
+
+            builder.Property(u => u.UpdatedAt)
+                .HasColumnName("updated_at")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAddOrUpdate();
         }
     }
 }

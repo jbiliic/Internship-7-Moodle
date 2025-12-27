@@ -48,6 +48,16 @@ namespace Moodle.Infrastructure.Database.Configurations
                 .IsRequired()
                 .HasDefaultValue(false);
 
+            builder.Property(u => u.CreatedAt)
+                .HasColumnName("created_at")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAdd();
+
+            builder.Property(u => u.UpdatedAt)
+                .HasColumnName("updated_at")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAddOrUpdate();
+
         }
     }
 }

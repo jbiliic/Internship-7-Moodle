@@ -14,7 +14,7 @@ namespace Moodle.Domain.Entities
         public Conversation Conversation { get; set; } = null!;
         public User Sender { get; set; } = null!;
 
-        ValidationResult Validate() { 
+        public ValidationResult Validate() { 
             var resault = new ValidationResult();
             if (string.IsNullOrWhiteSpace(Title))
             {

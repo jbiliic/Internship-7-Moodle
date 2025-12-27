@@ -10,5 +10,7 @@ namespace Moodle.Domain.Persistence.Repository
         Task<IReadOnlyList<Conversation>?> GetConversationsAsync(int userId);
         Task<IReadOnlyList<Course>?> GetEnrolledInAsync(int userId);
         Task<IReadOnlyList<Course>?> GetManagedByAsync(int professorId);
+        Task<IReadOnlyList<User>> GetUsersWithConversation(int userId);
+        Task<IReadOnlyList<User>> GetUsersWOConversation(int userId);
     }
 }

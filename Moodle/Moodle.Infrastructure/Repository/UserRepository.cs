@@ -47,6 +47,30 @@ namespace Moodle.Infrastructure.Repository
             return await _context.Courses
                 .Where(c => c.ProfessorId == professorId)
                 .ToListAsync();
-        } 
+        }
+
+        public async Task<IReadOnlyList<User>> GetUsersWithConversation(int userId)
+        {
+            return await _context.Conversations
+                .Where(c => 
+                    (c.User1Id == userId || c.User2Id == userId))
+                .Select(c => c.User1Id == userId
+                    ? c.User2
+                    : c.User1)
+                .Distinct()
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<User>> GetUsersWOConversation(int userId)
+        {
+            return await _context.Users
+                .Where(u => u.Id != userId &&
+                    !_context.Conversations.Any(c =>
+                        (c.User1Id == userId && c.User2Id == u.Id) ||
+                        (c.User2Id == userId && c.User1Id == u.Id)))
+                .AsNoTracking()
+                .ToListAsync();
+        }
     }
 }
