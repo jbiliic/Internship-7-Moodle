@@ -21,5 +21,6 @@ namespace Moodle.Application.DTO
             CreatedAt = courseNotification.CreatedAt;
             ProfessorEmail = courseNotification.Professor.Email;
         }
+        public CourseNotifDTO() { }
     }
 }

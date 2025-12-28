@@ -9,7 +9,7 @@
             {
                 Code = $"{CodePrefix}1",
                 Message = "The student is already enrolled in this course.",
-                Severity = ValidationSeverity.Warning,
+                Severity = ValidationSeverity.Error,
                 Type = ValidationType.Business
             };
         }

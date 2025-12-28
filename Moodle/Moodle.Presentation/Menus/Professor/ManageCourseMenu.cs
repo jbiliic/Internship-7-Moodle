@@ -9,13 +9,16 @@ namespace Moodle.Presentation.Menus.Professor
         private readonly GetProfessorCoursesHandler _getProfessorCoursesHandler;
         private readonly GetAllStudentsHandler _getAllStudentsHandler;
         private readonly AddStudentHandler _addStudentHandler;
+        private readonly AddNotifAndMatsHandler _addNotifAndMatsHandler;
         public ManageCourseMenu(GetProfessorCoursesHandler getProfessorCoursesHandler 
             , GetAllStudentsHandler getAllStudentsHandler,
-            AddStudentHandler addStudentHandler)
+            AddStudentHandler addStudentHandler,
+            AddNotifAndMatsHandler addNotifAndMatsHandler)
         {
             _getProfessorCoursesHandler = getProfessorCoursesHandler;
             _getAllStudentsHandler = getAllStudentsHandler;
             _addStudentHandler = addStudentHandler;
+            _addNotifAndMatsHandler = addNotifAndMatsHandler;
         }
         public async Task ShowAsync(UserDTO currUser)
         {
@@ -64,10 +67,10 @@ namespace Moodle.Presentation.Menus.Professor
                         await AddStudentsAsync(currUser, course);
                         break;
                     case '2':
-                        // Logic to view course materials and notifications
+                        await AddNotifs(currUser, course);
                         break;
                     case '3':
-                        // Logic to add materials
+                        await AddMats(currUser, course);
                         break;
                     case '0':
                         return;
@@ -101,7 +104,7 @@ namespace Moodle.Presentation.Menus.Professor
                     Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
                     continue;
                 }
-                var selectedStudent = res.Value.Items[input - 1];
+                var selectedStudent = res.Value.Items.OrderBy(s => s.Email).ElementAt(input - 1);
                 var addRes = await _addStudentHandler.HandleAddStudentAsync(selectedStudent.Id, course.Id);
                 if (addRes.Value.IsSuccess)
                 {
@@ -114,7 +117,31 @@ namespace Moodle.Presentation.Menus.Professor
             }
         }
         private async Task AddNotifs(UserDTO currUser, CourseDTO course) { 
-            
+            var title = Helper.Helper.getStringOptional("notification title");
+            var content = Helper.Helper.getStringOptional("notification content");
+            var res = await _addNotifAndMatsHandler.HandleAddNotificationAsync(new CourseNotifDTO { Title = title, Content = content }, course.Id, currUser.Id);
+            if (res.Value.IsSuccess)
+            {
+                Helper.Helper.clearDisplAndDisplMessage($"Notification '{title}' added successfully.");
+            }
+            else
+            {
+                Helper.Helper.displayValidationErrors(res.Errors);
+            }
+        }
+        private async Task AddMats(UserDTO currUser, CourseDTO course)
+        {
+            var title = Helper.Helper.getStringOptional("material title");
+            var url = Helper.Helper.getStringOptional("material url");
+            var res = await _addNotifAndMatsHandler.HandleAddMatsAsync(new MaterialsDTO { Title = title, FilePath = url }, course.Id, currUser.Id);
+            if (res.Value.IsSuccess)
+            {
+                Helper.Helper.clearDisplAndDisplMessage($"Material '{title}' added successfully.");
+            }
+            else
+            {
+                Helper.Helper.displayValidationErrors(res.Errors);
+            }
         }
     }
 }

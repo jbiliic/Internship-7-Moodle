@@ -16,7 +16,7 @@ namespace Moodle.Domain.Entities.Course
         public Course Course { get; set; } = null!;
         public User Uploader { get; set; } = null!;
 
-        Common.Validation.ValidationResult Validate()
+        public Common.Validation.ValidationResult Validate()
         {
             var Result = new ValidationResult();
             if (string.IsNullOrWhiteSpace(Title) || Title.Length > MaxNameLen)

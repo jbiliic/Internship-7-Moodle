@@ -62,6 +62,7 @@ internal class Program
         services.AddScoped<GetUsersEnrolledInHandler>();
         services.AddScoped<GetAllStudentsHandler>();
         services.AddScoped<AddStudentHandler>();
+        services.AddScoped<AddNotifAndMatsHandler>();
 
         //Menus
         services.AddScoped<LoginMenu>();

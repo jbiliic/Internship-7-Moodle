@@ -19,5 +19,6 @@ namespace Moodle.Application.DTO
             FilePath = mats.FilePath;
             UploadedAt = mats.CreatedAt;
         }
+        public MaterialsDTO() { }
     }
 }

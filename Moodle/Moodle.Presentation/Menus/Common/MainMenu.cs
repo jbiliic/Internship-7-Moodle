@@ -91,7 +91,7 @@ namespace Moodle.Presentation.Menus.Common
                             break;
 
                         case '3':
-                            //await _router.NavigateTo<ManageCoursesMenu>(currUser);
+                            await _router.NavigateTo<ManageCourseMenu>(currUser);
                             break;
 
                         default:
