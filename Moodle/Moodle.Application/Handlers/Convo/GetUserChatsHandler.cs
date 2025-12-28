@@ -3,7 +3,7 @@ using Moodle.Application.DTO;
 using Moodle.Application.DTO.Auth;
 using Moodle.Domain.Persistence.Repository;
 
-namespace Moodle.Application.Handlers
+namespace Moodle.Application.Handlers.Convo
 {
     public class GetUserChatsHandler
     {
@@ -12,12 +12,12 @@ namespace Moodle.Application.Handlers
         {
             _userRepo = userRepo;
         }
-        public async Task<Resault<GetAllResponse<UserDTO>>> HandleGetChats(int userId)
+        public async Task<Result<GetAllResponse<UserDTO>>> HandleGetChats(int userId)
         {
-            var res = new Resault<GetAllResponse<UserDTO>>();
+            var res = new Result<GetAllResponse<UserDTO>>();
             return await ExecuteGetChats(userId, res);
         }
-        private async Task<Resault<GetAllResponse<UserDTO>>> ExecuteGetChats(int userId, Resault<GetAllResponse<UserDTO>> res)
+        private async Task<Result<GetAllResponse<UserDTO>>> ExecuteGetChats(int userId, Result<GetAllResponse<UserDTO>> res)
         {
             var users = await _userRepo.GetUsersWithConversation(userId);
             if (users == null || users.Count == 0)
@@ -30,12 +30,12 @@ namespace Moodle.Application.Handlers
             return res;
         }
 
-        public async Task<Resault<GetAllResponse<UserDTO>>> HandleGetWOChats(int userId)
+        public async Task<Result<GetAllResponse<UserDTO>>> HandleGetWOChats(int userId)
         {
-            var res = new Resault<GetAllResponse<UserDTO>>();
+            var res = new Result<GetAllResponse<UserDTO>>();
             return await ExecuteGetWOChats(userId, res);
         }
-        private async Task<Resault<GetAllResponse<UserDTO>>> ExecuteGetWOChats(int userId, Resault<GetAllResponse<UserDTO>> res)
+        private async Task<Result<GetAllResponse<UserDTO>>> ExecuteGetWOChats(int userId, Result<GetAllResponse<UserDTO>> res)
         {
             var users = await _userRepo.GetUsersWOConversation(userId);
             if (users == null || users.Count == 0)

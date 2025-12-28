@@ -2,16 +2,16 @@
 
 namespace Moodle.Application.Common.Model
 {
-    public class ValidationResaultItem
+    public class ValidationResultItem
     {
         public ValidationSeverity Severity { get; init; }
         public ValidationType Type { get; init; }
         public string Code { get; init; }
         public string Message { get; init; }
 
-        public static ValidationResaultItem FromValidationItem(ValidationItem item)
+        public static ValidationResultItem FromValidationItem(ValidationItem item)
         {
-            return new ValidationResaultItem
+            return new ValidationResultItem
             {
                 Severity = item.Severity,
                 Type = item.Type,

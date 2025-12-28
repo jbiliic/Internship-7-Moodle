@@ -14,6 +14,6 @@ internal class MenuRouter
         where TMenu : IMenu
     {
         var menu = _provider.GetRequiredService<TMenu>();
-        await menu.Show(user);
+        await menu.ShowAsync(user);
     }
 }

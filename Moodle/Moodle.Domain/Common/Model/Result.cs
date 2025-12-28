@@ -2,15 +2,15 @@
 
 namespace Moodle.Domain.Common.Model
 {
-    public class Resault<TValue>
+    public class Result<TValue>
     {
         public TValue Value { get; private set; }
-        public ValidationResult ValidationResault { get; private set; }
+        public ValidationResult ValidationResult { get; private set; }
 
-        public Resault(TValue value, ValidationResult validationResault)
+        public Result(TValue value, ValidationResult validationResult)
         {
             Value = value;
-            ValidationResault = validationResault;
+            ValidationResult = validationResult;
         }
     }
 }

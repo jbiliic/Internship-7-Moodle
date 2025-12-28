@@ -2,5 +2,5 @@
 
 public interface IMenu
 {
-    Task Show(UserDTO user);
+    Task ShowAsync(UserDTO user);
 }

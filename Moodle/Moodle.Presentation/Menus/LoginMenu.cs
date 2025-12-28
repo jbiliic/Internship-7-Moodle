@@ -13,7 +13,7 @@ namespace Moodle.Presentation.Menus
             _registrationHandler = registrationHandler;
             _router = router;
         }
-        public async Task Show(UserDTO? currUser)
+        public async Task ShowAsync(UserDTO? currUser)
         {
             currUser = null;
             while (true)
@@ -26,13 +26,13 @@ namespace Moodle.Presentation.Menus
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
-                        currUser =  await LoginSubMenu();
+                        currUser =  await LoginSubMenuAsync();
                         if (currUser == null)
                             break;
                         await _router.NavigateTo<MainMenu>(currUser);
                         break;
                     case '2':
-                        currUser = await RegisterSubMenu();
+                        currUser = await RegisterSubMenuAsync();
                         if (currUser == null)
                             break;
                         await _router.NavigateTo<MainMenu>(currUser);
@@ -47,7 +47,7 @@ namespace Moodle.Presentation.Menus
                 }
             }
         }
-        public async Task<UserDTO?> LoginSubMenu() {
+        public async Task<UserDTO?> LoginSubMenuAsync() {
             var email = Helper.Helper.getString("email");
             var passw = Helper.Helper.getString("password");
             var res = await _loginHandler.HandleLogin(new Application.DTO.Auth.UserLoginReq { Email = email, Password = passw });
@@ -59,7 +59,7 @@ namespace Moodle.Presentation.Menus
             Helper.Helper.clearDisplAndDisplMessage($"Login successful! Welcome, {res.Value.Item.FirstName}.");
             return res.Value.Item;
         }
-        public async Task<UserDTO?> RegisterSubMenu() {
+        public async Task<UserDTO?> RegisterSubMenuAsync() {
             var firstName = Helper.Helper.getStringOptional("first name");
             var lastName = Helper.Helper.getStringOptional("last name");
             var email = Helper.Helper.getString("email");

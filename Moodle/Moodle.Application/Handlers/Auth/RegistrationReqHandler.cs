@@ -18,7 +18,7 @@ namespace Moodle.Application.Handlers.Auth
             _userValidationService = service;
             _context = context;
         }
-        private async Task<Resault<SuccessResponse<UserDTO>>> ExecuteRegistration(UserRegistrationReq req, Resault<SuccessResponse<UserDTO>> res)
+        private async Task<Result<SuccessResponse<UserDTO>>> ExecuteRegistration(UserRegistrationReq req, Result<SuccessResponse<UserDTO>> res)
         {
             var user = new Domain.Entities.User
             {
@@ -28,9 +28,9 @@ namespace Moodle.Application.Handlers.Auth
                 Password = req.Password,
                 DateOfBirth = req.BirthDate
             };
-            var validationResault = await _userValidationService.ValidateUser(user);
-            res.setValidationResault(validationResault);
-            if (validationResault.HasErrors)
+            var validationResult = await _userValidationService.ValidateUser(user);
+            res.setValidationResult(validationResult);
+            if (validationResult.HasErrors)
             {
                 res.setValue(new SuccessResponse<UserDTO> { IsSuccess = false, Item = null });
                 return res;
@@ -41,9 +41,9 @@ namespace Moodle.Application.Handlers.Auth
             await _context.SaveChangesAsync();
             return res;
         }
-        public async Task<Resault<SuccessResponse<UserDTO>>> HandleRegistration(UserRegistrationReq req)
+        public async Task<Result<SuccessResponse<UserDTO>>> HandleRegistration(UserRegistrationReq req)
         {
-            var res = new Resault<SuccessResponse<UserDTO>>();
+            var res = new Result<SuccessResponse<UserDTO>>();
             return await ExecuteRegistration(req, res);
         }
     }

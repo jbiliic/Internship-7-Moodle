@@ -12,7 +12,7 @@ namespace Moodle.Application.Handlers.Auth
         {
             _userRepo = userRepo;
         }
-        private async Task<Resault<SuccessResponse<UserDTO>>> ExecuteLogin(UserLoginReq req , Resault<SuccessResponse<UserDTO>> res)
+        private async Task<Result<SuccessResponse<UserDTO>>> ExecuteLogin(UserLoginReq req , Result<SuccessResponse<UserDTO>> res)
         {
             var passw = req.Password;
             var email = req.Email;
@@ -26,9 +26,9 @@ namespace Moodle.Application.Handlers.Auth
             res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Item = userDto , Id = user.Id });
             return res;
         }
-        public async Task<Resault<SuccessResponse<UserDTO>>> HandleLogin(UserLoginReq req)
+        public async Task<Result<SuccessResponse<UserDTO>>> HandleLogin(UserLoginReq req)
         {
-            var res = new Resault<SuccessResponse<UserDTO>>();
+            var res = new Result<SuccessResponse<UserDTO>>();
             return await ExecuteLogin(req, res);
         }
     }

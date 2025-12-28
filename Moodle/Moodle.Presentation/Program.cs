@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moodle.Application.Common;
 using Moodle.Application.Handlers;
 using Moodle.Application.Handlers.Auth;
+using Moodle.Application.Handlers.Convo;
 using Moodle.Domain.Persistence.Repository;
 using Moodle.Domain.Persistence.Repository.Common;
 using Moodle.Domain.Services.Validation;
@@ -52,12 +53,15 @@ internal class Program
         services.AddScoped<GetUserChatsHandler>();
         services.AddScoped<SendMessageHandler>();
         services.AddScoped<GetChatAndMessagesHandler>();
+        services.AddScoped<GetEnrolledInHandler>();
+        services.AddScoped<GetCourseNotifAndMatsHandler>();
 
         //Menus
         services.AddScoped<LoginMenu>();
         services.AddScoped<MainMenu>();
         services.AddScoped<ChatMenu>();
         services.AddScoped<MenuRouter>();
+        services.AddScoped<StudentCourseMenu>();
 
         // Build provider
         using var provider = services.BuildServiceProvider();
@@ -67,7 +71,7 @@ internal class Program
 
         // Resolve your entry handler
         var menu = scope.ServiceProvider.GetRequiredService<LoginMenu>();
-        await menu.Show(null);
+        await menu.ShowAsync(null);
 
 
 

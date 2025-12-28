@@ -15,26 +15,26 @@ namespace Moodle.Domain.Entities
         public User Sender { get; set; } = null!;
 
         public ValidationResult Validate() { 
-            var resault = new ValidationResult();
+            var Result = new ValidationResult();
             if (string.IsNullOrWhiteSpace(Title))
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.Message.EmptyTitleErr
                     );
             }
             if (string.IsNullOrWhiteSpace(Content))
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.Message.EmptyContentErr
                     );
             }
             if(Content.Length + Title.Length > MessageMaxLen)
             {                 
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.Message.ExceedMaxLengthErr
                     );
             }
-            return resault;
+            return Result;
         }
     }
 }

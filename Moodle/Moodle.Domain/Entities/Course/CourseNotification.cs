@@ -15,28 +15,28 @@ namespace Moodle.Domain.Entities.Course
         public User Professor { get; set; } = null!;
 
 
-        ValidationResult Validate()
+        public ValidationResult Validate()
         {
-            var resault = new ValidationResult();
+            var Result = new ValidationResult();
             if (string.IsNullOrWhiteSpace(Title))
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.CourseNotifications.EmptyTitleErr
                     );
             }
             if (string.IsNullOrWhiteSpace(Content))
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.CourseNotifications.EmptyContentErr
                     );
             }
             if (Content.Length + Title.Length > MessageMaxLen)
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.CourseNotifications.ExceedMaxLengthErr
                     );
             }
-            return resault;
+            return Result;
         }
     }
 }

@@ -18,27 +18,27 @@ namespace Moodle.Domain.Entities.Course
 
         Common.Validation.ValidationResult Validate()
         {
-            var resault = new ValidationResult();
+            var Result = new ValidationResult();
             if (string.IsNullOrWhiteSpace(Title) || Title.Length > MaxNameLen)
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.LearningMaterials.EmptyTitleErr
                     );
             }
 
             if (!Uri.TryCreate(FilePath, UriKind.Absolute, out var uri))
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.LearningMaterials.InvalidURL
                     );
             }
             else if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
             {
-                resault.AddValidationItem(
+                Result.AddValidationItem(
                     ValidationItems.LearningMaterials.InvalidURL
                     );
             }
-            return resault;
+            return Result;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Moodle.Domain.Entities;
 using Moodle.Domain.Entities.Course;
 using Moodle.Domain.Persistence.Repository;
 using Moodle.Infrastructure.Database;
@@ -32,6 +33,14 @@ namespace Moodle.Infrastructure.Repository
             return await _context.CourseNotifications
                 .Where(cn => cn.CourseId == courseId)
                 .ToListAsync();
+        }
+
+        public async Task<User?> GetProfessor(int courseId)
+        {
+            return await _context.Courses
+                .Where(c => c.Id == courseId)
+                .Select(c => c.Professor)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Security.Cryptography;
+using Moodle.Application.Common.Model;
 using Moodle.Application.DTO;
 
 namespace Moodle.Presentation.Helper
@@ -52,7 +53,7 @@ namespace Moodle.Presentation.Helper
                 }
                 return null;
         }
-        public static void displayValidationErrors(IReadOnlyList<Moodle.Application.Common.Model.ValidationResaultItem> errors)
+        public static void displayValidationErrors(IReadOnlyList<Moodle.Application.Common.Model.ValidationResultItem> errors)
         {
             Console.Clear();
             Console.WriteLine("The following errors occurred:");
@@ -116,6 +117,34 @@ namespace Moodle.Presentation.Helper
                     Console.WriteLine($"\t\t\t\t\tTitle: {message.Title} \n\t\t\t\t\tContent: {message.Content} \n\t\t\t\t\tSent at: {message.SentAt}");
                 }
             }
+        }
+        public static void renderCourseNotifs(GetAllResponse<CourseNotifDTO> notifs)
+        {
+            Console.Clear();
+            if (notifs.isEmpty)
+            {
+                Console.WriteLine("So empty...");
+                return;
+            }
+            foreach (var notif in notifs.Items)
+            {
+                Console.WriteLine($"Title: {notif.Title} \n Content: {notif.Content} \nSent at: {notif.CreatedAt} by {notif.ProfessorEmail}");
+            }
+            Console.ReadKey();
+        }
+        public static void renderMats(GetAllResponse<MaterialsDTO> mats)
+        {
+            Console.Clear();
+            if (mats.isEmpty)
+            {
+                Console.WriteLine("So empty...");
+                return;
+            }
+            foreach (var mat in mats.Items)
+            {
+                Console.WriteLine($"Title: {mat.Title} \n URL: {mat.FilePath} \nSent at: {mat.UploadedAt}");
+            }
+            Console.ReadKey();
         }
     }
 }

@@ -2,26 +2,26 @@
 
 namespace Moodle.Application.Common.Model
 {
-    public class Resault<TValue> where TValue : class
+    public class Result<TValue> where TValue : class
     {
-        private List<ValidationResaultItem> _info = new List<ValidationResaultItem>();
-        private List<ValidationResaultItem> _warnings = new List<ValidationResaultItem>();
-        private List<ValidationResaultItem> _errors = new List<ValidationResaultItem>();
+        private List<ValidationResultItem> _info = new List<ValidationResultItem>();
+        private List<ValidationResultItem> _warnings = new List<ValidationResultItem>();
+        private List<ValidationResultItem> _errors = new List<ValidationResultItem>();
 
         public TValue Value { get; set; }
         public Guid ReqId { get; init; } = Guid.NewGuid();
 
-        public IReadOnlyList<ValidationResaultItem> Infos
+        public IReadOnlyList<ValidationResultItem> Infos
         {
             get => _info.AsReadOnly();
             init => _info.AddRange(value);
         }
-        public IReadOnlyList<ValidationResaultItem> Warnings
+        public IReadOnlyList<ValidationResultItem> Warnings
         {
             get => _warnings.AsReadOnly();
             init => _warnings.AddRange(value);
         }
-        public IReadOnlyList<ValidationResaultItem> Errors
+        public IReadOnlyList<ValidationResultItem> Errors
         {
             get => _errors.AsReadOnly();
             init => _errors.AddRange(value);
@@ -35,17 +35,17 @@ namespace Moodle.Application.Common.Model
         {
             Value = value;
         }
-        public void setValidationResault(ValidationResult validationResault)
+        public void setValidationResult(ValidationResult validationResult)
         {
-            _info.AddRange(validationResault.ValidationItems
+            _info.AddRange(validationResult.ValidationItems
                 .Where(vi => vi.Severity == ValidationSeverity.Info)
-                .Select(ValidationResaultItem.FromValidationItem));
-            _warnings.AddRange(validationResault.ValidationItems
+                .Select(ValidationResultItem.FromValidationItem));
+            _warnings.AddRange(validationResult.ValidationItems
                 .Where(vi => vi.Severity == ValidationSeverity.Warning)
-                .Select(ValidationResaultItem.FromValidationItem));
-            _errors.AddRange(validationResault.ValidationItems
+                .Select(ValidationResultItem.FromValidationItem));
+            _errors.AddRange(validationResult.ValidationItems
                 .Where(vi => vi.Severity == ValidationSeverity.Error)
-                .Select(ValidationResaultItem.FromValidationItem));
+                .Select(ValidationResultItem.FromValidationItem));
         }
     }
 }

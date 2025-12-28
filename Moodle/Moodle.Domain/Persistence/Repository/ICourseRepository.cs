@@ -1,4 +1,5 @@
-﻿using Moodle.Domain.Entities.Course;
+﻿using Moodle.Domain.Entities;
+using Moodle.Domain.Entities.Course;
 
 namespace Moodle.Domain.Persistence.Repository
 {
@@ -7,5 +8,6 @@ namespace Moodle.Domain.Persistence.Repository
         Task<IReadOnlyList<CourseNotification>?> GetNotifsByCourseAsync(int courseId);
         Task<IReadOnlyList<LearningMaterials>?> GetMaterialsByCourseAsync(int courseId);
         Task<Course> GetByNameAndMajorAsync(string name, string major);
+        Task<User?> GetProfessor(int courseId);
     }
 }

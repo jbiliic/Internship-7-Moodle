@@ -4,7 +4,7 @@ using Moodle.Application.DTO;
 using Moodle.Domain.Entities;
 using Moodle.Domain.Persistence.Repository.Common;
 
-namespace Moodle.Application.Handlers
+namespace Moodle.Application.Handlers.Convo
 {
     public class SendMessageHandler
     {
@@ -15,12 +15,12 @@ namespace Moodle.Application.Handlers
             _messageRepository = messageRepository;
             _context = context;
         }
-        public async Task<Resault<SuccessResponse<Message>>> HandleSendMessageReq(MessageDTO messageDTO , int conversationId)
+        public async Task<Result<SuccessResponse<Message>>> HandleSendMessageReq(MessageDTO messageDTO , int conversationId)
         {
-            var res = new Resault<SuccessResponse<Message>>();
+            var res = new Result<SuccessResponse<Message>>();
             return await ExecuteSendMessageReq(messageDTO,conversationId, res);
         }
-        private async Task<Resault<SuccessResponse<Message>>> ExecuteSendMessageReq(MessageDTO messageDTO, int conversationId, Resault<SuccessResponse<Message>> res) { 
+        private async Task<Result<SuccessResponse<Message>>> ExecuteSendMessageReq(MessageDTO messageDTO, int conversationId, Result<SuccessResponse<Message>> res) { 
             var mess = new Message
             {
                 ConversationId = conversationId,
@@ -31,7 +31,7 @@ namespace Moodle.Application.Handlers
             var validationRes = mess.Validate();
             if (validationRes.HasErrors)
             {
-                res.setValidationResault(validationRes);
+                res.setValidationResult(validationRes);
                 res.setValue(new SuccessResponse<Message> { IsSuccess = false, Item = null });
                 return res;
             }

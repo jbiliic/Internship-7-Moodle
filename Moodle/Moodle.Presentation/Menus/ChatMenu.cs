@@ -1,6 +1,6 @@
 ﻿using Moodle.Application.Common.Model;
 using Moodle.Application.DTO;
-using Moodle.Application.Handlers;
+using Moodle.Application.Handlers.Convo;
 using Moodle.Domain.Entities;
 
 namespace Moodle.Presentation.Menus
@@ -16,7 +16,7 @@ namespace Moodle.Presentation.Menus
             _chatAndMessagesHandler = chatAndMessagesHandler;
             _sendMessageHandler = messageHandler;
         }
-        public async Task Show(UserDTO currUser)
+        public async Task ShowAsync(UserDTO currUser)
         {
             while (true) { 
                 Console.Clear();
@@ -29,11 +29,11 @@ namespace Moodle.Presentation.Menus
                 {
                     case '1':
                         var res = await _userChatHandler.HandleGetChats(currUser.Id);
-                        await ViewChats(currUser, res);
+                        await ViewChatsAsync(currUser, res);
                         break;
                     case '2':
                         var res2 = await _userChatHandler.HandleGetWOChats(currUser.Id);
-                        await ViewChats(currUser, res2);
+                        await ViewChatsAsync(currUser, res2);
                         break;
                     case '0':
                         return;
@@ -43,7 +43,7 @@ namespace Moodle.Presentation.Menus
                 }
             }
         }
-        public async Task ViewChats(UserDTO currUser , Resault<GetAllResponse<UserDTO>> res)
+        public async Task ViewChatsAsync(UserDTO currUser , Result<GetAllResponse<UserDTO>> res)
         {
             while (true)
             {
@@ -75,11 +75,11 @@ namespace Moodle.Presentation.Menus
                 var otherUserId = res.Value.Items[input - 1].Id;
                 var resC = await _chatAndMessagesHandler.HandleGetConversationReq(currUser.Id, otherUserId);
                 var conversation = resC.Value.Item;
-                await EnterChat(conversation, currUser);
+                await EnterChatAsync(conversation, currUser);
             }
         }
 
-        public async Task EnterChat(Conversation conversation , UserDTO currUser)
+        public async Task EnterChatAsync(Conversation conversation , UserDTO currUser)
         {
             var otherUserId = conversation.User1Id == currUser.Id ? conversation.User2Id : conversation.User1Id;
             var res = await _chatAndMessagesHandler.HandleGetMessagesReq(conversation.Id);
