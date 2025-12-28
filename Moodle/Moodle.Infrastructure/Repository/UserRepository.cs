@@ -21,6 +21,14 @@ namespace Moodle.Infrastructure.Repository
                 .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
 
+        public async Task<IReadOnlyList<User>> GetAllStudentsAsync()
+        {
+            return await _context.Users
+                .Where(u => !u.IsProfessor && !u.IsAdministrator)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<User?> GetByEmailAsync(string email)
         {
             return await _context.Users

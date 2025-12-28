@@ -3,7 +3,7 @@ using Moodle.Application.DTO;
 using Moodle.Application.Handlers.Convo;
 using Moodle.Domain.Entities;
 
-namespace Moodle.Presentation.Menus
+namespace Moodle.Presentation.Menus.Common
 {
     internal class ChatMenu  : IMenu
     {
@@ -43,7 +43,7 @@ namespace Moodle.Presentation.Menus
                 }
             }
         }
-        public async Task ViewChatsAsync(UserDTO currUser , Result<GetAllResponse<UserDTO>> res)
+        private async Task ViewChatsAsync(UserDTO currUser , Result<GetAllResponse<UserDTO>> res)
         {
             while (true)
             {
@@ -79,7 +79,7 @@ namespace Moodle.Presentation.Menus
             }
         }
 
-        public async Task EnterChatAsync(Conversation conversation , UserDTO currUser)
+        private async Task EnterChatAsync(Conversation conversation , UserDTO currUser)
         {
             var otherUserId = conversation.User1Id == currUser.Id ? conversation.User2Id : conversation.User1Id;
             var res = await _chatAndMessagesHandler.HandleGetMessagesReq(conversation.Id);

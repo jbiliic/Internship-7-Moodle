@@ -1,6 +1,6 @@
 ﻿using Moodle.Application.DTO;
 using Moodle.Application.Handlers.Auth;
-namespace Moodle.Presentation.Menus
+namespace Moodle.Presentation.Menus.Common
 {
     internal class LoginMenu : IMenu
     {
@@ -47,7 +47,7 @@ namespace Moodle.Presentation.Menus
                 }
             }
         }
-        public async Task<UserDTO?> LoginSubMenuAsync() {
+        private async Task<UserDTO?> LoginSubMenuAsync() {
             var email = Helper.Helper.getString("email");
             var passw = Helper.Helper.getString("password");
             var res = await _loginHandler.HandleLogin(new Application.DTO.Auth.UserLoginReq { Email = email, Password = passw });
@@ -59,7 +59,7 @@ namespace Moodle.Presentation.Menus
             Helper.Helper.clearDisplAndDisplMessage($"Login successful! Welcome, {res.Value.Item.FirstName}.");
             return res.Value.Item;
         }
-        public async Task<UserDTO?> RegisterSubMenuAsync() {
+        private async Task<UserDTO?> RegisterSubMenuAsync() {
             var firstName = Helper.Helper.getStringOptional("first name");
             var lastName = Helper.Helper.getStringOptional("last name");
             var email = Helper.Helper.getString("email");

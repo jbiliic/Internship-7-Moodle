@@ -48,5 +48,11 @@ namespace Moodle.Infrastructure.Repository
                 .Where(c => c.ProfessorId == professorId)
                 .ToListAsync();
         }
+
+        public async Task<bool> IsStudentEnrolledAsync(int userId, int courseId)
+        {
+            return await _context.Enrollments
+                .AnyAsync(e => e.UserId == userId && e.CourseId == courseId);
+        }
     }
 }

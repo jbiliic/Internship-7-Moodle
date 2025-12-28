@@ -10,5 +10,6 @@ namespace Moodle.Domain.Persistence.Repository
         Task<Course> GetByNameAndMajorAsync(string name, string major);
         Task<User?> GetProfessor(int courseId);
         Task<IReadOnlyList<Course>?> GetCoursesManagedByProfessor(int professorId);
+        Task<bool> IsStudentEnrolledAsync(int userId, int courseId);
     }
 }

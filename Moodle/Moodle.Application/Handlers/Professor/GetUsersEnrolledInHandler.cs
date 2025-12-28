@@ -3,7 +3,7 @@ using Moodle.Application.DTO;
 using Moodle.Domain.Entities;
 using Moodle.Domain.Persistence.Repository;
 
-namespace Moodle.Application.Handlers
+namespace Moodle.Application.Handlers.Professor
 {
     public class GetUsersEnrolledInHandler
     {

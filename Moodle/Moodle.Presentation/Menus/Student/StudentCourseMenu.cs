@@ -1,7 +1,7 @@
 ﻿using Moodle.Application.DTO;
 using Moodle.Application.Handlers.StudentCourse;
 
-namespace Moodle.Presentation.Menus
+namespace Moodle.Presentation.Menus.Student
 {
     internal class StudentCourseMenu : IMenu
     {
@@ -49,7 +49,7 @@ namespace Moodle.Presentation.Menus
 
             }
         }
-        public async Task CourseScreenAsync(UserDTO currUser, CourseDTO course) {
+        private async Task CourseScreenAsync(UserDTO currUser, CourseDTO course) {
             while (true) {
                 Console.Clear();
                 Console.WriteLine("1 - Course Notifications");

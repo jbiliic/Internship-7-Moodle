@@ -1,6 +1,8 @@
 ﻿using Moodle.Application.DTO;
+using Moodle.Presentation.Menus.Professor;
+using Moodle.Presentation.Menus.Student;
 
-namespace Moodle.Presentation.Menus
+namespace Moodle.Presentation.Menus.Common
 {
     internal class MainMenu : IMenu
     {

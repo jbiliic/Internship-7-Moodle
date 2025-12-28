@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using Moodle.Application.DTO;
-using Moodle.Application.Handlers;
+using Moodle.Application.Handlers.Professor;
 using Moodle.Application.Handlers.StudentCourse;
 
-namespace Moodle.Presentation.Menus
+namespace Moodle.Presentation.Menus.Professor
 {
     internal class ProfessorCourseMenu : IMenu
     {
@@ -51,7 +51,7 @@ namespace Moodle.Presentation.Menus
 
         }
 
-        public async Task ViewCourseAsync(UserDTO currUser, CourseDTO course)
+        private async Task ViewCourseAsync(UserDTO currUser, CourseDTO course)
         {
             while (true)
             {

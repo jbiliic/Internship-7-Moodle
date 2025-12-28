@@ -2,7 +2,7 @@
 using Moodle.Application.DTO;
 using Moodle.Domain.Persistence.Repository;
 
-namespace Moodle.Application.Handlers
+namespace Moodle.Application.Handlers.Professor
 {
     public class GetProfessorCoursesHandler
     {
