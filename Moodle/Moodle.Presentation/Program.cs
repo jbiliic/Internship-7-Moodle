@@ -6,6 +6,7 @@ using Moodle.Application.Common;
 using Moodle.Application.Handlers;
 using Moodle.Application.Handlers.Auth;
 using Moodle.Application.Handlers.Convo;
+using Moodle.Application.Handlers.StudentCourse;
 using Moodle.Domain.Persistence.Repository;
 using Moodle.Domain.Persistence.Repository.Common;
 using Moodle.Domain.Services.Validation;
@@ -55,6 +56,8 @@ internal class Program
         services.AddScoped<GetChatAndMessagesHandler>();
         services.AddScoped<GetEnrolledInHandler>();
         services.AddScoped<GetCourseNotifAndMatsHandler>();
+        services.AddScoped<GetProfessorCoursesHandler>();
+        services.AddScoped<GetUsersEnrolledInHandler>();
 
         //Menus
         services.AddScoped<LoginMenu>();
@@ -62,6 +65,7 @@ internal class Program
         services.AddScoped<ChatMenu>();
         services.AddScoped<MenuRouter>();
         services.AddScoped<StudentCourseMenu>();
+        services.AddScoped<ProfessorCourseMenu>();
 
         // Build provider
         using var provider = services.BuildServiceProvider();
@@ -72,8 +76,5 @@ internal class Program
         // Resolve your entry handler
         var menu = scope.ServiceProvider.GetRequiredService<LoginMenu>();
         await menu.ShowAsync(null);
-
-
-
     }
 }

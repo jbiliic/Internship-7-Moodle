@@ -7,7 +7,7 @@ using Moodle.Infrastructure.Repository.Common;
 
 namespace Moodle.Infrastructure.Repository
 {
-    public class UserRepository : Repository<User, int>,IUserRepository
+    public class UserRepository : Repository<User, int> , IUserRepository
     {
         private readonly MoodleDbContext _context;
         public UserRepository(MoodleDbContext context) : base(context)
@@ -46,6 +46,15 @@ namespace Moodle.Infrastructure.Repository
         {
             return await _context.Courses
                 .Where(c => c.ProfessorId == professorId)
+                .ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<User>> GetUsersEnrolledInByCourseIdAsync(int courseId)
+        {
+            return await _context.Users
+                .Where(u => _context.Enrollments
+                    .Any(e => e.CourseId == courseId && e.UserId == u.Id))
+                .AsNoTracking()
                 .ToListAsync();
         }
 

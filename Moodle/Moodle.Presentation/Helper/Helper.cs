@@ -20,10 +20,10 @@ namespace Moodle.Presentation.Helper
                 Console.Write($"\nEnter {inputType}: ");
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn))
-                { 
+                {
                     Console.Write($"\n{inputType} can't be whitespace");
                     Console.ReadKey();
-                    continue; 
+                    continue;
                 }
                 Console.Clear();
                 return toReturn;
@@ -40,18 +40,18 @@ namespace Moodle.Presentation.Helper
         }
         public static DateTimeOffset? getDateOfBirth(string inputType)
         {
-                Console.Write($"Enter {inputType} like dd-mm-yyyy: ");
-                var input = Console.ReadLine();
-                if (DateTimeOffset.TryParseExact(
-                input,
-                "dd-MM-yyyy",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out var dateOfBirth))
-                {
-                    return dateOfBirth;
-                }
-                return null;
+            Console.Write($"Enter {inputType} like dd-mm-yyyy: ");
+            var input = Console.ReadLine();
+            if (DateTimeOffset.TryParseExact(
+            input,
+            "dd-MM-yyyy",
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
+            out var dateOfBirth))
+            {
+                return dateOfBirth;
+            }
+            return null;
         }
         public static void displayValidationErrors(IReadOnlyList<Moodle.Application.Common.Model.ValidationResultItem> errors)
         {
@@ -95,7 +95,7 @@ namespace Moodle.Presentation.Helper
             {
                 Console.Write($"Enter {inputType}: ");
                 var toReturn = Console.ReadLine();
-                if(int.TryParse(toReturn, out var result))
+                if (int.TryParse(toReturn, out var result))
                 {
                     return result;
                 }
@@ -105,7 +105,8 @@ namespace Moodle.Presentation.Helper
                 }
             }
         }
-        public static void renderMessages(IReadOnlyList<MessageDTO> messages, int otherUserId) {
+        public static void renderMessages(IReadOnlyList<MessageDTO> messages, int otherUserId)
+        {
             foreach (var message in messages)
             {
                 if (message.SenderId == otherUserId)
@@ -143,6 +144,45 @@ namespace Moodle.Presentation.Helper
             foreach (var mat in mats.Items)
             {
                 Console.WriteLine($"Title: {mat.Title} \n URL: {mat.FilePath} \nSent at: {mat.UploadedAt}");
+            }
+            Console.ReadKey();
+        }
+        public static void renderSortedUsers(GetAllResponse<UserDTO> users)
+        {
+            Console.Clear();
+            if (users == null || users.isEmpty)
+            {
+                clearDisplAndDisplMessage("Where is everybody???");
+                return;
+            }
+            var names = new List<UserDTO>();
+            var noNames = new List<UserDTO>();
+            foreach (var user in users.Items)
+            {
+                if (string.IsNullOrWhiteSpace(user.FirstName))
+                {
+                    noNames.Add(user);
+                }
+                else
+                {
+                    names.Add(user);
+                }
+            }
+            names = names
+                .OrderBy(u => u.FirstName)
+                .ToList();
+            noNames = noNames
+                .OrderBy(u => u.Email)
+                .ToList();
+            Console.WriteLine("Named students:");
+            foreach (var name in names)
+            {
+                Console.WriteLine($" ID : {name.Id} , Name : {name.FirstName} , Mail : {name.Email}");  
+            }
+            Console.WriteLine("\nAnonymous students:");
+            foreach(var noName in noNames)
+            {
+                Console.WriteLine($" ID : {noName.Id} , Mail : {noName.Email}");
             }
             Console.ReadKey();
         }

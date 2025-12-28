@@ -1,5 +1,5 @@
 ﻿using Moodle.Application.DTO;
-using Moodle.Application.Handlers;
+using Moodle.Application.Handlers.StudentCourse;
 
 namespace Moodle.Presentation.Menus
 {
@@ -44,7 +44,8 @@ namespace Moodle.Presentation.Menus
                     }
                     break;
                 }
-                await CourseScreenAsync(currUser, res.Value.Items[input - 1]);
+                var selectedCourse = res.Value.Items[input - 1];
+                await CourseScreenAsync(currUser, selectedCourse);
 
             }
         }

@@ -42,5 +42,11 @@ namespace Moodle.Infrastructure.Repository
                 .Select(c => c.Professor)
                 .FirstOrDefaultAsync();
         }
+        public async Task<IReadOnlyList<Course>?> GetCoursesManagedByProfessor(int professorId)
+        {
+            return await _context.Courses
+                .Where(c => c.ProfessorId == professorId)
+                .ToListAsync();
+        }
     }
 }

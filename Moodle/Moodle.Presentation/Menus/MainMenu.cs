@@ -81,7 +81,7 @@ namespace Moodle.Presentation.Menus
                     switch (input)
                     {
                         case '1':
-                            //await _router.NavigateTo<MyCoursesMenu>(currUser);
+                            await _router.NavigateTo<ProfessorCourseMenu>(currUser);
                             break;
 
                         case '2':
