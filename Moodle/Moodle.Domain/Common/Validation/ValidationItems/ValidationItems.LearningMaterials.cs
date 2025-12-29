@@ -8,14 +8,14 @@
             public static readonly ValidationItem EmptyTitleErr = new ValidationItem
             {
                 Code = $"{CodePrefix}1",
-                Message = $"Naslov materijala ne smije biti prazan",
+                Message = $"Title cant be empty",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem InvalidURL = new ValidationItem
             {
                 Code = $"{CodePrefix}2",
-                Message = $"URL nije validnog formata",
+                Message = $"URL invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };

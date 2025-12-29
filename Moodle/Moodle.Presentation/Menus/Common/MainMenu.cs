@@ -1,4 +1,5 @@
 ﻿using Moodle.Application.DTO;
+using Moodle.Presentation.Menus.Admin;
 using Moodle.Presentation.Menus.Professor;
 using Moodle.Presentation.Menus.Student;
 
@@ -66,7 +67,7 @@ namespace Moodle.Presentation.Menus.Common
                     switch (input)
                     {
                         case '1':
-                            //await _router.NavigateTo<ManageUsersMenu>(currUser);
+                            await _router.NavigateTo<ManageUsersMenu>(currUser);
                             break;
 
                         case '2':

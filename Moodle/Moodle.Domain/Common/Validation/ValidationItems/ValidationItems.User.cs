@@ -10,7 +10,7 @@
             public static readonly ValidationItem FirstNameErr = new ValidationItem
             {
                 Code = $"{CodePrefix}1",
-                Message = $"Unos imena nije valjan",
+                Message = $"Name invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
@@ -18,7 +18,7 @@
             public static readonly ValidationItem LastNameErr = new ValidationItem
             {
                 Code = $"{CodePrefix}2",
-                Message = $"Unos prezimena nije valjan",
+                Message = $"Last name invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
@@ -26,14 +26,14 @@
             public static readonly ValidationItem EmailExists = new ValidationItem
             {
                 Code = $"{CodePrefix}3",
-                Message = $"Email vec postoji u bazi podataka",
+                Message = $"Email already exists in the database",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem EmailInvalidFormat = new ValidationItem
             {
                 Code = $"{CodePrefix}4",
-                Message = $"Email nije validnog formata",
+                Message = $"Email invalid format",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
@@ -41,14 +41,14 @@
             public static readonly ValidationItem BirthDateInvalid = new ValidationItem
             {
                 Code = $"{CodePrefix}5",
-                Message = $"Uneseni datum rodenja nije validan",
+                Message = $"Birth date invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem PasswError = new ValidationItem
             {
                 Code = $"{CodePrefix}6",
-                Message = $"Lozinka nije dovoljno cvrsta",
+                Message = $"Password not strong enough",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };

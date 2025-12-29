@@ -7,5 +7,6 @@ namespace Moodle.Domain.Persistence.Repository
     {
         Task<IReadOnlyList<Message>> GetAllMessagesAsync(int conversationId);
         Task<Conversation?> GetConversationBetweenUsersAsync(int user1Id, int user2Id);
+        void DeleteConversations(int userId);
     }
 }

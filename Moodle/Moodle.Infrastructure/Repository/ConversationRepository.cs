@@ -25,5 +25,11 @@ namespace Moodle.Domain.Persistence.Repository
                 .FirstOrDefaultAsync(c => 
                     (c.User1Id == user1Id && c.User2Id == user2Id));
         }
+        public void DeleteConversations(int userId)
+        {
+            _context.Conversations
+                .Where(c => c.User1Id == userId || c.User2Id == userId)
+                .ExecuteDelete();
+        }
     }
 }

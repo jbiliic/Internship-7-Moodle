@@ -8,21 +8,21 @@
             public static readonly ValidationItem EmptyContentErr = new ValidationItem
             {
                 Code = $"{CodePrefix}1",
-                Message = $"Sadrzaj poruke ne smije biti prazan",
+                Message = $"Content cant be empty",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem ExceedMaxLengthErr = new ValidationItem
             {
                 Code = $"{CodePrefix}2",
-                Message = $"Sadrzaj poruke prelazi maksimalnu dozvoljenu duzinu",
+                Message = $"Content exceeds maximum allowed length",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem EmptyTitleErr = new ValidationItem
             {
                 Code = $"{CodePrefix}3",
-                Message = $"Naslov poruke ne smije biti prazan",
+                Message = $"Title can not be empty",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };

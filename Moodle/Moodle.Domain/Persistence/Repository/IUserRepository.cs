@@ -7,12 +7,12 @@ namespace Moodle.Domain.Persistence.Repository
     {
         Task<Entities.User?> GetByEmailAsync(string email);
         Task<User?> AuthenticateUserAsync(string email, string password);
-        Task<IReadOnlyList<Conversation>?> GetConversationsAsync(int userId);
         Task<IReadOnlyList<Course>?> GetEnrolledInAsync(int userId);
         Task<IReadOnlyList<Course>?> GetManagedByAsync(int professorId);
         Task<IReadOnlyList<User>> GetUsersWithConversation(int userId);
         Task<IReadOnlyList<User>> GetUsersWOConversation(int userId);
         Task<IReadOnlyList<User>> GetUsersEnrolledInByCourseIdAsync(int courseId);
         Task<IReadOnlyList<User>> GetAllStudentsAsync();
+        Task<IReadOnlyList<User>> GetAllProfessorsAsync();
     }
 }

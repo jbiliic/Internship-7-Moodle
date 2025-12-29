@@ -9,11 +9,13 @@ namespace Moodle.Application.Handlers.Admin
     {
         private readonly IMoodleDbContext _context;
         private readonly IUserRepository _userRepository;
+        private readonly IConversationRepository _conversationRepository;
 
-        public DeleteUserHandler(IMoodleDbContext context , IUserRepository userRepository)
+        public DeleteUserHandler(IMoodleDbContext context , IUserRepository userRepository, IConversationRepository conversationRepository)
         {
             _context = context;
             _userRepository = userRepository;
+            _conversationRepository = conversationRepository;
         }
 
         public async Task<Result<SuccessResponse>> HandleDeleteUserAsync(int userId)
@@ -31,6 +33,7 @@ namespace Moodle.Application.Handlers.Admin
             }
             if (!user.IsProfessor)
             {
+                _conversationRepository.DeleteConversations(userId);
                 _userRepository.Delete(user);
                 await _context.SaveChangesAsync();
                 res.setValue(new SuccessResponse { IsSuccess = true });
@@ -39,6 +42,7 @@ namespace Moodle.Application.Handlers.Admin
             var courses = await _userRepository.GetManagedByAsync(userId);
             if (courses == null || courses.Count == 0)
             {
+                _conversationRepository.DeleteConversations(userId);
                 _userRepository.Delete(user);
                 await _context.SaveChangesAsync();
                 res.setValue(new SuccessResponse { IsSuccess = true });

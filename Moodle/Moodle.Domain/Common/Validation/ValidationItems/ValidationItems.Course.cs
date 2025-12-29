@@ -8,35 +8,35 @@
             public static readonly ValidationItem MajorInvalid = new ValidationItem
             {
                 Code = $"{CodePrefix}1",
-                Message = $"Unos smijera nije validan",
+                Message = $"Major is invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem InvalidCourseName = new ValidationItem
             {
                 Code = $"{CodePrefix}2",
-                Message = $"Naziv kolegija nije validan",
+                Message = $"Course name is invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem InvalidSemester = new ValidationItem
             {
                 Code = $"{CodePrefix}3",
-                Message = $"Unos semestra nije valjan",
+                Message = $"Semester is invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem InvalidECTS = new ValidationItem
             {
                 Code = $"{CodePrefix}3",
-                Message = $"Unos ECTS bodova nije valjan",
+                Message = $"ECTS is invalid",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
             public static readonly ValidationItem CourseExists = new ValidationItem
             {
                 Code = $"{CodePrefix}4",
-                Message = $"Kolegij vec postoji na odabranom smijeru",
+                Message = $"Course already exists in the selected major",
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };

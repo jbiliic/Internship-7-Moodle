@@ -18,6 +18,7 @@ namespace Moodle.Presentation.Menus.Common
             currUser = null;
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Welcome to Moodle!");
                 Console.WriteLine("1. Login");
                 Console.WriteLine("2. Register");
@@ -48,6 +49,7 @@ namespace Moodle.Presentation.Menus.Common
             }
         }
         private async Task<UserDTO?> LoginSubMenuAsync() {
+            Console.Clear();
             var email = Helper.Helper.getString("email");
             var passw = Helper.Helper.getString("password");
             var res = await _loginHandler.HandleLogin(new Application.DTO.Auth.UserLoginReq { Email = email, Password = passw });
@@ -60,10 +62,11 @@ namespace Moodle.Presentation.Menus.Common
             return res.Value.Item;
         }
         private async Task<UserDTO?> RegisterSubMenuAsync() {
+            Console.Clear();
             var firstName = Helper.Helper.getStringOptional("first name");
             var lastName = Helper.Helper.getStringOptional("last name");
             var email = Helper.Helper.getString("email");
-            var password = Helper.Helper.getString("password");
+            var password = Helper.Helper.getString("password(min. 6 letters , 1 number , 1 uppercase)");
             var confirmPassword = Helper.Helper.getString("confirm password");
             var birthDate = Helper.Helper.getDateOfBirth("birth date (yyyy-MM-dd)");
             var randStr = Helper.Helper.generateCaptcha(6);

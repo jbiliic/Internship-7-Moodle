@@ -21,6 +21,14 @@ namespace Moodle.Infrastructure.Repository
                 .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
 
+        public async Task<IReadOnlyList<User>> GetAllProfessorsAsync()
+        {
+            return await _context.Users
+                .Where(u => u.IsProfessor)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<IReadOnlyList<User>> GetAllStudentsAsync()
         {
             return await _context.Users
@@ -33,13 +41,6 @@ namespace Moodle.Infrastructure.Repository
         {
             return await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-        public async Task<IReadOnlyList<Conversation>?> GetConversationsAsync(int userId)
-        {
-            return await _context.Conversations
-                .Where(c => c.User1Id == userId || c.User2Id == userId)
-                .ToListAsync();
         }
 
         public async Task<IReadOnlyList<Course>?> GetEnrolledInAsync(int userId)
