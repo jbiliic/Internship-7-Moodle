@@ -68,6 +68,7 @@ internal class Program
         services.AddScoped<DeleteUserHandler>();
         services.AddScoped<GetAllUsersHandler>();
         services.AddScoped<EditUserRoleHandler>();
+        services.AddScoped<EditUserEmailHandler>();
 
         //Menus
         services.AddScoped<LoginMenu>();
