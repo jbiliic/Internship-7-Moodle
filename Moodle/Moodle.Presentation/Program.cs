@@ -67,6 +67,7 @@ internal class Program
         services.AddScoped<AddNotifAndMatsHandler>();
         services.AddScoped<DeleteUserHandler>();
         services.AddScoped<GetAllUsersHandler>();
+        services.AddScoped<EditUserRoleHandler>();
 
         //Menus
         services.AddScoped<LoginMenu>();

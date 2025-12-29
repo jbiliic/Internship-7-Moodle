@@ -32,12 +32,12 @@ namespace Moodle.Infrastructure.Database.Configurations
             builder.HasOne(c => c.User1)
                 .WithMany()
                 .HasForeignKey(c => c.User1Id)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(c => c.User2)
                 .WithMany()
                 .HasForeignKey(c => c.User2Id)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(u => u.CreatedAt)
                 .HasColumnName("created_at")

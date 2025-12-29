@@ -42,7 +42,7 @@ namespace Moodle.Infrastructure.Database.Configurations
             builder.HasOne(m => m.Sender)
                 .WithMany()
                 .HasForeignKey(m => m.SenderId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(u => u.CreatedAt)
                 .HasColumnName("created_at")

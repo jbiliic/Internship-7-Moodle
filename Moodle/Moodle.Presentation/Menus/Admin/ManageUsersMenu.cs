@@ -8,10 +8,14 @@ namespace Moodle.Presentation.Menus.Admin
     {
         private readonly DeleteUserHandler _deleteUserHandler;
         private readonly GetAllUsersHandler _getAllUsersHandler;
-        public ManageUsersMenu(DeleteUserHandler deleteUserHandler, GetAllUsersHandler getAllUsersHandler)
+        private readonly EditUserRoleHandler _editUserRoleHandler;
+        public ManageUsersMenu(DeleteUserHandler deleteUserHandler,
+            GetAllUsersHandler getAllUsersHandler,
+            EditUserRoleHandler editUserRoleHandler)
         {
             _deleteUserHandler = deleteUserHandler;
             _getAllUsersHandler = getAllUsersHandler;
+            _editUserRoleHandler = editUserRoleHandler;
         }
         public async Task ShowAsync(UserDTO user)
         {
@@ -67,6 +71,9 @@ namespace Moodle.Presentation.Menus.Admin
                     Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
                     continue;
                 }
+
+                if (!Helper.Helper.waitForConfirmation()) continue;
+
                 var selectedUser = users.ElementAt(input - 1);
                 var addRes = await _deleteUserHandler.HandleDeleteUserAsync(selectedUser.Id);
                 if (addRes.Value.IsSuccess)
@@ -84,6 +91,57 @@ namespace Moodle.Presentation.Menus.Admin
 
                 }
             }
+        }
+        private async Task EditUserRoleAsync()
+        {
+            Console.Clear();
+            var res = await _getAllUsersHandler.HandleGetAllUsersAsync();
+            if (res.Value.isEmpty)
+            {
+                Helper.Helper.clearDisplAndDisplMessage("No users found to edit.");
+                return;
+            }
+            var users = new List<UserDTO>(res.Value.Items);
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("All Users:");
+                var number = 1;
+                foreach (var user in res.Value.Items.OrderBy(s => s.Email))
+                {
+                    Console.WriteLine($"{number++}. {user.FirstName} ({user.Email})");
+                }
+                var input = Helper.Helper.getAndValidateInputInt(" a user to edit or 0 to go back: ");
+                if (input == 0) return;
+                if (input < 1 || input > res.Value.Items.Count)
+                {
+                    Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                    continue;
+                }
+
+                if (!Helper.Helper.waitForConfirmation()) continue;
+
+                var selectedUser = users.ElementAt(input - 1);
+                var addRes = await _editUserRoleHandler.HandleEditUserRoleAsync(selectedUser.Id);
+                if (addRes.Value.IsSuccess)
+                {
+                    Helper.Helper.clearDisplAndDisplMessage("User role edited successfully.");
+                    users.Remove(selectedUser);
+                }
+                else if (addRes.hasErrors)
+                {
+                    Helper.Helper.displayValidationErrors(addRes.Errors);
+                }
+                else
+                {
+                    Helper.Helper.clearDisplAndDisplMessage("User doesnt exist.");
+
+                }
+            }
+        }
+        private async Task EditUserEmailAsync()
+        {
+           
         }
     }
 }

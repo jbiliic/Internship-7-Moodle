@@ -59,6 +59,13 @@
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
+            public static readonly ValidationItem UserEdit = new ValidationItem
+            {
+                Code = $"{CodePrefix}8",
+                Message = $"Professor has active classes",
+                Severity = ValidationSeverity.Error,
+                Type = ValidationType.Formal
+            };
         }
     }
 }

@@ -186,5 +186,30 @@ namespace Moodle.Presentation.Helper
             }
             Console.ReadKey();
         }
+        public static bool waitForConfirmation()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("\nAre you sure (y/n): ");
+                switch (Console.ReadLine())
+                {
+                    case "Y":
+                    case "y":
+                    case "1":
+                        Console.Clear();
+                        return true;
+                    case "N":
+                    case "n":
+                    case "0":
+                        Console.Clear();
+                        return false;
+                    default:
+                        Console.Write("\nInvalid input.");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
     }
 }
