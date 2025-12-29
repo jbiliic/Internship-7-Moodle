@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moodle.Application.Common;
+using Moodle.Application.Handlers.Admin;
 using Moodle.Application.Handlers.Auth;
 using Moodle.Application.Handlers.Convo;
 using Moodle.Application.Handlers.Professor;
@@ -13,6 +14,7 @@ using Moodle.Domain.Services.Validation;
 using Moodle.Infrastructure.Database;
 using Moodle.Infrastructure.Repository;
 using Moodle.Infrastructure.Repository.Common;
+using Moodle.Presentation.Menus.Admin;
 using Moodle.Presentation.Menus.Common;
 using Moodle.Presentation.Menus.Professor;
 using Moodle.Presentation.Menus.Student;
@@ -63,6 +65,8 @@ internal class Program
         services.AddScoped<GetAllStudentsHandler>();
         services.AddScoped<AddStudentHandler>();
         services.AddScoped<AddNotifAndMatsHandler>();
+        services.AddScoped<DeleteUserHandler>();
+        services.AddScoped<GetAllUsersHandler>();
 
         //Menus
         services.AddScoped<LoginMenu>();
@@ -72,6 +76,7 @@ internal class Program
         services.AddScoped<StudentCourseMenu>();
         services.AddScoped<ProfessorCourseMenu>();
         services.AddScoped<ManageCourseMenu>();
+        services.AddScoped<ManageUsersMenu>();
 
         // Build provider
         using var provider = services.BuildServiceProvider();

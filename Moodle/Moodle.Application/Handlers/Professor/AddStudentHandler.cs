@@ -22,17 +22,17 @@ namespace Moodle.Application.Handlers.Professor
             _context = context;
             _courseRepository = courseRepository;
         }
-        public async Task<Result<SuccessResponse<UserDTO>>> HandleAddStudentAsync(int userId, int courseId)
+        public async Task<Result<SuccessResponse>> HandleAddStudentAsync(int userId, int courseId)
         {
-            var res = new Result<SuccessResponse<UserDTO>>();
+            var res = new Result<SuccessResponse>();
             return await ExecuteAddStudentReq(userId, courseId, res);
         }
-        private async Task<Result<SuccessResponse<UserDTO>>> ExecuteAddStudentReq(int userId, int courseId, Result<SuccessResponse<UserDTO>> res)
+        private async Task<Result<SuccessResponse>> ExecuteAddStudentReq(int userId, int courseId, Result<SuccessResponse> res)
         {
             var isEnrolled = await _courseRepository.IsStudentEnrolledAsync(userId, courseId);
             if (isEnrolled)
             {
-                res.setValue(new SuccessResponse<UserDTO> { IsSuccess = false, Item = null });
+                res.setValue(new SuccessResponse { IsSuccess = false});
                 var validationResult = new ValidationResult();
                 validationResult.AddValidationItem(ValidationItems.IsEnrolled.StudentAlreadyEnrolled);
                 res.setValidationResult(validationResult);
@@ -45,7 +45,7 @@ namespace Moodle.Application.Handlers.Professor
             };
             await _isEnrolledRepository.InsertAsync(enrollment);
             await _context.SaveChangesAsync();
-            res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Item = null  , Id = enrollment.Id });
+            res.setValue(new SuccessResponse { IsSuccess = true, Id = enrollment.Id });
             return res;
         }
     }

@@ -16,14 +16,14 @@ namespace Moodle.Application.Handlers.Convo
             _context = context;
         }
 
-        public async Task<Result<SuccessResponse<Conversation>>> HandleGetConversationReq(int user1, int user2)
+        public async Task<Result<SuccessResponseGet<Conversation>>> HandleGetConversationReq(int user1, int user2)
         {
-            var res = new Result<SuccessResponse<Conversation>>();
+            var res = new Result<SuccessResponseGet<Conversation>>();
             if (user1 > user2)
                 return await ExecuteGetConversationReq(user2, user1, res);
             return await ExecuteGetConversationReq(user1, user2, res);
         }
-        private async Task<Result<SuccessResponse<Conversation>>> ExecuteGetConversationReq(int user1, int user2, Result<SuccessResponse<Conversation>> res)
+        private async Task<Result<SuccessResponseGet<Conversation>>> ExecuteGetConversationReq(int user1, int user2, Result<SuccessResponseGet<Conversation>> res)
         {
             var conversation = await _conversationRepository.GetConversationBetweenUsersAsync(user1, user2);
             if (conversation == null)
@@ -36,7 +36,7 @@ namespace Moodle.Application.Handlers.Convo
                 await _conversationRepository.InsertAsync(conversation);
                 await _context.SaveChangesAsync();
             }
-            res.setValue(new SuccessResponse<Conversation> { Item = conversation });
+            res.setValue(new SuccessResponseGet<Conversation> { Item = conversation });
             return res;
         }
 

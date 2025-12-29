@@ -15,12 +15,12 @@ namespace Moodle.Application.Handlers.Convo
             _messageRepository = messageRepository;
             _context = context;
         }
-        public async Task<Result<SuccessResponse<Message>>> HandleSendMessageReq(MessageDTO messageDTO , int conversationId)
+        public async Task<Result<SuccessResponse>> HandleSendMessageReq(MessageDTO messageDTO , int conversationId)
         {
-            var res = new Result<SuccessResponse<Message>>();
+            var res = new Result<SuccessResponse>();
             return await ExecuteSendMessageReq(messageDTO,conversationId, res);
         }
-        private async Task<Result<SuccessResponse<Message>>> ExecuteSendMessageReq(MessageDTO messageDTO, int conversationId, Result<SuccessResponse<Message>> res) { 
+        private async Task<Result<SuccessResponse>> ExecuteSendMessageReq(MessageDTO messageDTO, int conversationId, Result<SuccessResponse> res) { 
             var mess = new Message
             {
                 ConversationId = conversationId,
@@ -32,12 +32,12 @@ namespace Moodle.Application.Handlers.Convo
             if (validationRes.HasErrors)
             {
                 res.setValidationResult(validationRes);
-                res.setValue(new SuccessResponse<Message> { IsSuccess = false, Item = null });
+                res.setValue(new SuccessResponse { IsSuccess = false });
                 return res;
             }
             await _messageRepository.InsertAsync(mess);
             await _context.SaveChangesAsync();
-            res.setValue(new SuccessResponse<Message> { IsSuccess = true, Item = mess , Id = mess.Id });
+            res.setValue(new SuccessResponse{ IsSuccess = true, Id = mess.Id });
             return res;
         }
     }

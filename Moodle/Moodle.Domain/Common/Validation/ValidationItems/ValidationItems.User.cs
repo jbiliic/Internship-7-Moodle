@@ -52,6 +52,13 @@
                 Severity = ValidationSeverity.Error,
                 Type = ValidationType.Formal
             };
+            public static readonly ValidationItem UserDelete = new ValidationItem
+            {
+                Code = $"{CodePrefix}7",
+                Message = $"Professor has active classes",
+                Severity = ValidationSeverity.Error,
+                Type = ValidationType.Formal
+            };
         }
     }
 }

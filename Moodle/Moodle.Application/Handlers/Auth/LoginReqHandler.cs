@@ -12,23 +12,23 @@ namespace Moodle.Application.Handlers.Auth
         {
             _userRepo = userRepo;
         }
-        private async Task<Result<SuccessResponse<UserDTO>>> ExecuteLogin(UserLoginReq req , Result<SuccessResponse<UserDTO>> res)
+        private async Task<Result<SuccessResponseGet<UserDTO>>> ExecuteLogin(UserLoginReq req , Result<SuccessResponseGet<UserDTO>> res)
         {
             var passw = req.Password;
             var email = req.Email;
             var user = await _userRepo.AuthenticateUserAsync(email, passw);
             if (user == null)
             {
-                res.setValue(new SuccessResponse<UserDTO> {IsSuccess = false , Item = null });
+                res.setValue(new SuccessResponseGet<UserDTO> {IsSuccess = false , Item = null });
                 return res;
             }
             var userDto = new UserDTO(user);
-            res.setValue(new SuccessResponse<UserDTO> { IsSuccess = true, Item = userDto , Id = user.Id });
+            res.setValue(new SuccessResponseGet<UserDTO> { IsSuccess = true, Item = userDto , Id = user.Id });
             return res;
         }
-        public async Task<Result<SuccessResponse<UserDTO>>> HandleLogin(UserLoginReq req)
+        public async Task<Result<SuccessResponseGet<UserDTO>>> HandleLogin(UserLoginReq req)
         {
-            var res = new Result<SuccessResponse<UserDTO>>();
+            var res = new Result<SuccessResponseGet<UserDTO>>();
             return await ExecuteLogin(req, res);
         }
     }

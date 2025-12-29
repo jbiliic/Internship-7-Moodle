@@ -13,22 +13,22 @@ namespace Moodle.Presentation.Menus.Common
         }
         public static Dictionary<char, string> studentMenuOptions = new Dictionary<char, string>
         {
-            { '1', "Moji kolegiji" },
-            { '2', "Privatni chat" },
-            { '0', "Odjava / Povratak" }
+            { '1', "My Courses" },
+            { '2', "Chat" },
+            { '0', "Logout" }
         };
         public static Dictionary<char, string> professorMenuOptions = new Dictionary<char, string>
         {
-            { '1', "Moji kolegiji" },
-            { '2', "Privatni chat" },
-            { '3', "Upravljanje kolegija" },
-            { '0', "Odjava / Povratak" }
+            { '1', "My Courses" },
+            { '2', "Chat" },
+            { '3', "Manage Courses" },
+            { '0', "Logout" }
         };
         public static Dictionary<char, string> adminMenuOptions { get; } = new Dictionary<char, string>
         {
-            { '1', "Upravljanje korisnicima" },
-            { '2', "Privatni chat" },
-            { '0', "Odjava / Povratak" }
+            { '1', "Manage Users" },
+            { '2', "Chat" },
+            { '0', "Logout" }
         };
 
        

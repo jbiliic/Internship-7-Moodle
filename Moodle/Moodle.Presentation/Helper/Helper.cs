@@ -111,11 +111,11 @@ namespace Moodle.Presentation.Helper
             {
                 if (message.SenderId == otherUserId)
                 {
-                    Console.WriteLine($"Title: {message.Title} \n Content: {message.Content} \nSent at: {message.SentAt}");
+                    Console.WriteLine($"Title: {message.Title} \n Content: {message.Content} \nSent at: {message.SentAt}\n");
                 }
                 else
                 {
-                    Console.WriteLine($"\t\t\t\t\tTitle: {message.Title} \n\t\t\t\t\tContent: {message.Content} \n\t\t\t\t\tSent at: {message.SentAt}");
+                    Console.WriteLine($"\t\t\t\t\t\tTitle: {message.Title} \n\t\t\t\t\t\tContent: {message.Content} \n\t\t\t\t\t\tSent at: {message.SentAt}\n");
                 }
             }
         }

@@ -21,12 +21,12 @@ namespace Moodle.Application.Handlers.Professor
             _context = context;
         }
 
-        public async Task<Result<SuccessResponse<CourseNotifDTO>>> HandleAddNotificationAsync(CourseNotifDTO notificationDTO , int courseId , int profId)
+        public async Task<Result<SuccessResponse>> HandleAddNotificationAsync(CourseNotifDTO notificationDTO , int courseId , int profId)
         {
-            var res = new Result<SuccessResponse<CourseNotifDTO>>();
+            var res = new Result<SuccessResponse>();
             return await ExecuteAddNotificationAsync(notificationDTO,courseId,profId, res);
         }
-        private async Task<Result<SuccessResponse<CourseNotifDTO>>> ExecuteAddNotificationAsync(CourseNotifDTO notificationDTO,int courseId,int profId, Result<SuccessResponse<CourseNotifDTO>> res)
+        private async Task<Result<SuccessResponse>> ExecuteAddNotificationAsync(CourseNotifDTO notificationDTO,int courseId,int profId, Result<SuccessResponse> res)
         {
             var notif = new CourseNotification()
             {
@@ -39,23 +39,23 @@ namespace Moodle.Application.Handlers.Professor
             var validationRes = notif.Validate();
             if (validationRes.HasErrors) {
                 res.setValidationResult(validationRes);
-                res.setValue(new SuccessResponse<CourseNotifDTO>() { IsSuccess = false , Item = null});
+                res.setValue(new SuccessResponse() { IsSuccess = false });
                 return res;
             }
 
             await _notificationRepo.InsertAsync(notif);
             await _context.SaveChangesAsync();
 
-            res.setValue(new SuccessResponse<CourseNotifDTO>() {IsSuccess = true , Id = notif.Id , Item = notificationDTO });
+            res.setValue(new SuccessResponse() {IsSuccess = true , Id = notif.Id});
             return res;
         }
 
-        public async Task<Result<SuccessResponse<MaterialsDTO>>> HandleAddMatsAsync(MaterialsDTO matsDTO, int courseId, int profId)
+        public async Task<Result<SuccessResponse>> HandleAddMatsAsync(MaterialsDTO matsDTO, int courseId, int profId)
         {
-            var res = new Result<SuccessResponse<MaterialsDTO>>();
+            var res = new Result<SuccessResponse>();
             return await ExecuteAddMatsAsync(matsDTO, courseId, profId, res);
         }
-        private async Task<Result<SuccessResponse<MaterialsDTO>>> ExecuteAddMatsAsync(MaterialsDTO matsDTO, int courseId, int profId, Result<SuccessResponse<MaterialsDTO>> res)
+        private async Task<Result<SuccessResponse>> ExecuteAddMatsAsync(MaterialsDTO matsDTO, int courseId, int profId, Result<SuccessResponse> res)
         {
             var mats = new LearningMaterials()
             {
@@ -69,14 +69,14 @@ namespace Moodle.Application.Handlers.Professor
             if (validationRes.HasErrors)
             {
                 res.setValidationResult(validationRes);
-                res.setValue(new SuccessResponse<MaterialsDTO>() { IsSuccess = false, Item = null });
+                res.setValue(new SuccessResponse() { IsSuccess = false});
                 return res;
             }
 
             await _materialRepo.InsertAsync(mats);
             await _context.SaveChangesAsync();
 
-            res.setValue(new SuccessResponse<MaterialsDTO>() { IsSuccess = true, Id = mats.Id, Item = matsDTO });
+            res.setValue(new SuccessResponse() { IsSuccess = true, Id = mats.Id });
             return res;
         }
     }
