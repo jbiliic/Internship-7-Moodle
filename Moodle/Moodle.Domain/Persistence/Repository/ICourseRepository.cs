@@ -12,5 +12,6 @@ namespace Moodle.Domain.Persistence.Repository
         Task<User?> GetProfessor(int courseId);
         Task<IReadOnlyList<Course>?> GetCoursesManagedByProfessor(int professorId);
         Task<bool> IsStudentEnrolledAsync(int userId, int courseId);
+        Task<IReadOnlyList<Course>?> GetTop3CoursesByEnrollmentsAsync(); 
     }
 }

@@ -58,6 +58,25 @@ namespace Moodle.Infrastructure.Repository
                 .ToListAsync();
         }
 
+        public async Task<int> GetNumMessagesPerUser(int userId, DateTimeOffset date)
+        {
+            return await _context.Messages
+                .Where(m => m.SenderId == userId && m.CreatedAt >= date)
+                .CountAsync();
+        }
+
+        public async Task<IReadOnlyList<User>> GetTop3MostMessagesAsync(DateTimeOffset time)
+        {
+            return await _context.Users
+                .Where(u => _context.Messages
+                    .Any(m => m.SenderId == u.Id && m.CreatedAt >= time))
+                .OrderByDescending(u => _context.Messages
+                    .Count(m => m.SenderId == u.Id && m.CreatedAt >= time))
+                .Take(3)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<IReadOnlyList<User>> GetUsersEnrolledInByCourseIdAsync(int courseId)
         {
             return await _context.Users

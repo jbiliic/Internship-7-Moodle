@@ -7,6 +7,7 @@ using Moodle.Application.Handlers.Admin;
 using Moodle.Application.Handlers.Auth;
 using Moodle.Application.Handlers.Convo;
 using Moodle.Application.Handlers.Professor;
+using Moodle.Application.Handlers.Stats;
 using Moodle.Application.Handlers.StudentCourse;
 using Moodle.Domain.Persistence.Repository;
 using Moodle.Domain.Persistence.Repository.Common;
@@ -72,6 +73,8 @@ internal class Program
         services.AddScoped<GetAllCoursesHandler>();
         services.AddScoped<GetAllProfHandler>();
         services.AddScoped<ReassignProfHandler>();
+        services.AddScoped<GetCoursesPerEnrollHandler>();
+        services.AddScoped<GetUsersPerNumMessage>();
 
         //Menus
         services.AddScoped<LoginMenu>();
@@ -82,6 +85,7 @@ internal class Program
         services.AddScoped<ProfessorCourseMenu>();
         services.AddScoped<ManageCourseMenu>();
         services.AddScoped<ManageUsersMenu>();
+        services.AddScoped<StatisticsMenu>();
 
         // Build provider
         using var provider = services.BuildServiceProvider();

@@ -75,11 +75,7 @@ namespace Moodle.Presentation.Menus.Admin
             {
                 Console.Clear();
                 Console.WriteLine("All Users:");
-                var number = 1;
-                foreach (var user in users.OrderBy(s => s.Email))
-                {
-                    Console.WriteLine($"{number++}. {user.FirstName} ({user.Email})");
-                }
+                var number = Helper.Helper.displayUsers(users);
                 var input = Helper.Helper.getAndValidateInputInt(" a user to delete or 0 to go back: ");
                 if (input == 0) return;
                 if (input < 1 || input > users.Count)
@@ -185,16 +181,12 @@ namespace Moodle.Presentation.Menus.Admin
                 return;
             }
 
-            var users = new List<UserDTO>(res.Value.Items);
+            var users = new List<UserDTO>(res.Value.Items.OrderBy(s => s.Email));
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("All Users:");
-                var number = 1;
-                foreach (var user in res.Value.Items.OrderBy(s => s.Email))
-                {
-                    Console.WriteLine($"{number++}. {user.FirstName} ({user.Email})");
-                }
+                var number = Helper.Helper.displayUsers(users);
                 var input = Helper.Helper.getAndValidateInputInt(" a user to edit or 0 to go back: ");
                 if (input == 0) return;
                 if (input < 1 || input > res.Value.Items.Count)
@@ -203,7 +195,7 @@ namespace Moodle.Presentation.Menus.Admin
                     continue;
                 }
 
-                var selectedUser = users.OrderBy(s => s.Email).ElementAt(input - 1);
+                var selectedUser = users.ElementAt(input - 1);
                 var newEmail = Helper.Helper.getString("the new email: ");
                 if(!Helper.Helper.waitForConfirmation()) continue;
 
@@ -220,7 +212,6 @@ namespace Moodle.Presentation.Menus.Admin
                 else
                 {
                     Helper.Helper.clearDisplAndDisplMessage("User doesnt exist.");
-
                 }
             }
         }
@@ -242,14 +233,14 @@ namespace Moodle.Presentation.Menus.Admin
                 return;
             }
             
-            var courses = new List<CourseDTO>(resCourses.Value.Items);
-            var professors = new List<UserDTO>(resProfessors.Value.Items);
+            var courses = new List<CourseDTO>(resCourses.Value.Items.OrderBy(c => c.Name));
+            var professors = new List<UserDTO>(resProfessors.Value.Items.OrderBy(c => c.Email));
+
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine("All Courses:");
                 var number = 1;
-                foreach (var course in courses.OrderBy(c => c.Name))
+                foreach (var course in courses)
                 {
                     Console.WriteLine($"{number++}. {course.Name}");
                 }
@@ -265,11 +256,7 @@ namespace Moodle.Presentation.Menus.Admin
 
                 Console.Clear();
                 Console.WriteLine("All Professors:");
-                number = 1;
-                foreach (var professor in professors.OrderBy(p => p.Email))
-                {
-                    Console.WriteLine($"{number++}. {professor.FirstName} ({professor.Email})");
-                }
+                number = Helper.Helper.displayUsers(professors);
                 input = Helper.Helper.getAndValidateInputInt(" a professor to assign or 0 to go back: ");
                 if (input == 0) return;
                 if (input < 1 || input > professors.Count)
@@ -277,7 +264,7 @@ namespace Moodle.Presentation.Menus.Admin
                     Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
                     continue;
                 }
-                var selectedProfessor = professors.OrderBy(p => p.Email).ElementAt(input - 1);
+                var selectedProfessor = professors.ElementAt(input - 1);
                 
                 if (!Helper.Helper.waitForConfirmation()) continue;
 

@@ -211,5 +211,15 @@ namespace Moodle.Presentation.Helper
                 }
             }
         }
+        public static int displayUsers(List<UserDTO> items)
+        {
+            Console.Clear();
+            var i = 0;
+            foreach (var item in items)
+            {
+                Console.WriteLine($" {++i}. {item.FirstName} ({item.Email})");
+            }
+            return i;
+        }
     }
 }

@@ -29,20 +29,38 @@ namespace Moodle.Presentation.Menus.Common
         {
             { '1', "Manage Users" },
             { '2', "Chat" },
+            { '3', "View Statistics" },
+            { '0', "Logout" }
+        };
+        public static Dictionary<char, string> profAdminMenuOptions { get; } = new Dictionary<char, string>
+        {
+            { '1', "Manage Users" },
+            { '2', "Chat" },
+            { '3', "View Statistics" },
+            { '4', "My Courses" },
+            { '5', "Manage Courses" },
             { '0', "Logout" }
         };
 
-       
 
-        public  async Task ShowAsync(UserDTO currUser) {
+
+        public async Task ShowAsync(UserDTO currUser)
+        {
             var options = new Dictionary<char, string>();
-            if (currUser.isAdministrator) {
+            if (currUser.isProfessor && currUser.isAdministrator)
+            {
+                options = profAdminMenuOptions;
+            }
+            else if (currUser.isAdministrator)
+            {
                 options = adminMenuOptions;
             }
-            else if (currUser.isProfessor) {
+            else if (currUser.isProfessor)
+            {
                 options = professorMenuOptions;
             }
-            else {
+            else
+            {
                 options = studentMenuOptions;
             }
 
@@ -62,64 +80,91 @@ namespace Moodle.Presentation.Menus.Common
                 if (input == '0')
                     return;
 
-                if (currUser.isAdministrator)
+                if (currUser.isProfessor && currUser.isAdministrator)
                 {
                     switch (input)
                     {
                         case '1':
                             await _router.NavigateTo<ManageUsersMenu>(currUser);
                             break;
-
                         case '2':
                             await _router.NavigateTo<ChatMenu>(currUser);
                             break;
-
-                        default:
-                            Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                        case '3':
+                            await _router.NavigateTo<StatisticsMenu>(currUser);
                             break;
-                    }
-                }
-                else if (currUser.isProfessor)
-                {
-                    switch (input)
-                    {
-                        case '1':
+                        case '4':
                             await _router.NavigateTo<ProfessorCourseMenu>(currUser);
                             break;
-
-                        case '2':
-                            await _router.NavigateTo<ChatMenu>(currUser);
-                            break;
-
-                        case '3':
+                        case '5':
                             await _router.NavigateTo<ManageCourseMenu>(currUser);
                             break;
-
                         default:
                             Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
                             break;
-                    }
+                    } 
                 }
-                else 
+                else if (currUser.isAdministrator)
                 {
                     switch (input)
                     {
-                        case '1':
-                            await _router.NavigateTo<StudentCourseMenu>(currUser);
-                            break;
+                                case '1':
+                                await _router.NavigateTo<ManageUsersMenu>(currUser);
+                                break;
 
-                        case '2':
-                            await _router.NavigateTo<ChatMenu>(currUser);
-                            break;
+                            case '2':
+                                await _router.NavigateTo<ChatMenu>(currUser);
+                                break;
+                            case '3':
+                                await _router.NavigateTo<StatisticsMenu>(currUser);
+                                break;
+                            default:
+                                Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                                break;
+                        }
+                    }
+                    else if (currUser.isProfessor)
+                    {
+                        switch (input)
+                        {
+                            case '1':
+                                await _router.NavigateTo<ProfessorCourseMenu>(currUser);
+                                break;
 
-                        default:
-                            Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
-                            break;
+                            case '2':
+                                await _router.NavigateTo<ChatMenu>(currUser);
+                                break;
+
+                            case '3':
+                                await _router.NavigateTo<ManageCourseMenu>(currUser);
+                                break;
+
+                            default:
+                                Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (input)
+                        {
+                            case '1':
+                                await _router.NavigateTo<StudentCourseMenu>(currUser);
+                                break;
+
+                            case '2':
+                                await _router.NavigateTo<ChatMenu>(currUser);
+                                break;
+
+                            default:
+                                Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
+                                break;
+                        }
                     }
                 }
             }
         }
+
     }
 
-}
 

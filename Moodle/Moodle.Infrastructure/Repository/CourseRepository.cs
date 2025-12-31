@@ -54,5 +54,14 @@ namespace Moodle.Infrastructure.Repository
             return await _context.Enrollments
                 .AnyAsync(e => e.UserId == userId && e.CourseId == courseId);
         }
+
+        public async Task<IReadOnlyList<Course>?> GetTop3CoursesByEnrollmentsAsync()
+        {
+            return await _context.Courses
+                .OrderByDescending(c =>
+                    _context.Enrollments.Count(e => e.CourseId == c.Id))
+                .Take(3)
+                .ToListAsync();
+        }
     }
 }

@@ -14,5 +14,7 @@ namespace Moodle.Domain.Persistence.Repository
         Task<IReadOnlyList<User>> GetUsersEnrolledInByCourseIdAsync(int courseId);
         Task<IReadOnlyList<User>> GetAllStudentsAsync();
         Task<IReadOnlyList<User>> GetAllProfessorsAsync();
+        Task<IReadOnlyList<User>> GetTop3MostMessagesAsync(DateTimeOffset time);
+        Task<int> GetNumMessagesPerUser(int userId, DateTimeOffset date);
     }
 }
