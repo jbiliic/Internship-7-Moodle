@@ -2,6 +2,7 @@
 using Moodle.Application.Common.Model;
 using Moodle.Domain.Common.Validation.ValidationItems;
 using Moodle.Domain.Persistence.Repository;
+using Moodle.Domain.Services.Cache;
 
 namespace Moodle.Application.Handlers.Admin
 {
@@ -21,12 +22,14 @@ namespace Moodle.Application.Handlers.Admin
         }
         private async Task<Result<SuccessResponse>> ExecuteEditUserRoleAsync(int userId,  Result<SuccessResponse> res)
         {
+            
             var user = await _userRepository.GetByIdAsync(userId);
             if (user == null)
             {
                 res.setValue(new SuccessResponse { IsSuccess = false });
                 return res;
             }
+            
             if (!user.IsProfessor)
             {
                 user.IsProfessor = !user.IsProfessor;

@@ -2,13 +2,14 @@
 using Moodle.Application.DTO;
 using Moodle.Application.DTO.Auth;
 using Moodle.Domain.Persistence.Repository;
+using Moodle.Domain.Services.Cache;
 
 namespace Moodle.Application.Handlers.Auth
 {
     public class LoginReqHandler
     {
         private readonly IUserRepository _userRepo;
-        public LoginReqHandler(IUserRepository userRepo)
+        public LoginReqHandler(IUserRepository userRepo )
         {
             _userRepo = userRepo;
         }

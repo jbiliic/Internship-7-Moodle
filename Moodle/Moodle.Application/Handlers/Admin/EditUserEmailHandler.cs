@@ -1,15 +1,17 @@
 ﻿using System.Text.RegularExpressions;
 using Moodle.Application.Common;
 using Moodle.Application.Common.Model;
+using Moodle.Application.DTO;
 using Moodle.Domain.Common.Validation.ValidationItems;
 using Moodle.Domain.Persistence.Repository;
+using Moodle.Domain.Services.Cache;
 
 namespace Moodle.Application.Handlers.Admin
 {
     public class EditUserEmailHandler
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMoodleDbContext _context;
+        private readonly IMoodleDbContext _context;  
         private readonly string RegexMailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         public EditUserEmailHandler(IUserRepository userRepository, IMoodleDbContext context)
         {
@@ -23,12 +25,15 @@ namespace Moodle.Application.Handlers.Admin
         }
         private async Task<Result<SuccessResponse>> ExecuteEditUserEmailAsync(int userId, string newEmail, Result<SuccessResponse> res)
         {
+           
             var user = await _userRepository.GetByIdAsync(userId);
+
             if (user == null)
             {
                 res.setValue(new SuccessResponse { IsSuccess = false });
                 return res;
             }
+
 
             if (!Regex.IsMatch(newEmail, RegexMailPattern))
             { 

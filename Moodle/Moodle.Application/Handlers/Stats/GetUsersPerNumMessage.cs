@@ -1,15 +1,18 @@
 ﻿using Moodle.Application.Common.Model;
 using Moodle.Application.DTO;
 using Moodle.Domain.Persistence.Repository;
+using Moodle.Domain.Services.Cache.Common;
 
 namespace Moodle.Application.Handlers.Stats
 {
     public class GetUsersPerNumMessage
     {
         private readonly IUserRepository _userRepository;
-        public GetUsersPerNumMessage(IUserRepository userRepository)
+        private readonly ICacheService<UserNumMessagesDTO> _cacheService;
+        public GetUsersPerNumMessage(IUserRepository userRepository, ICacheService<UserNumMessagesDTO> cacheService)
         {
             _userRepository = userRepository;
+            _cacheService = cacheService;
         }
         public async Task<Result<GetAllResponse<UserNumMessagesDTO>>> HandleGetUsersPerNumMessageAsync(DateTimeOffset date)
         {
@@ -27,8 +30,16 @@ namespace Moodle.Application.Handlers.Stats
             }
             var toReturn = new List<UserNumMessagesDTO>();
             foreach (var user in users) {
+                var cacheKey = $"UserNumMessagesDTO_{user.Id}";
+                var cachedData = await _cacheService.GetAsync(cacheKey);
+                if (cachedData != null)
+                {
+                    toReturn.Add(cachedData);
+                    continue;
+                }
                 var number = await _userRepository.GetNumMessagesPerUser(user.Id, date);
                 toReturn.Add(new UserNumMessagesDTO { userId = user.Id, numMessages = number , email = user.Email });
+                await _cacheService.SetAsync(cacheKey, toReturn.Last(), TimeSpan.FromHours(1));
             }
             res.setValue(new GetAllResponse<UserNumMessagesDTO> { Items = toReturn });
             return res;

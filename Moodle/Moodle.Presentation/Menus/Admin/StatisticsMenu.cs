@@ -149,6 +149,7 @@ namespace Moodle.Presentation.Menus.Admin
                     return;
                 }
                 var users = res.Value.Items;
+                Console.Clear();
                 Console.WriteLine("=== Top 3 Users by Number of Messages ===");
                 foreach (var userStat in users.OrderByDescending(u => u.numMessages).Take(3))
                 {
