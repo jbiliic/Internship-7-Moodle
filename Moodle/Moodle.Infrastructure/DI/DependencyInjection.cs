@@ -21,7 +21,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddDbContext<MoodleDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("Database")));
+            options.UseNpgsql(configuration.GetConnectionString("Postgres")));
 
         services.AddStackExchangeRedisCache(options =>
         {
