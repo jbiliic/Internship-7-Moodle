@@ -12,7 +12,8 @@ docker version
 
 ### From the solution root:
 
-docker compose up --build
+docker compose up -d postgres redis
+docker run -it --network moodle_default moodle-app:latest
 
 You will see the interactive menu:
 Welcome to Moodle!
