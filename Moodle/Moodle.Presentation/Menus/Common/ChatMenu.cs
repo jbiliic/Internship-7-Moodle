@@ -93,6 +93,8 @@ namespace Moodle.Presentation.Menus.Common
                 if (title == "/exit")
                     return;
                 var content = Helper.Helper.getStringOptional("content");
+                if (content == "/exit")
+                    return;
                 var messageDto = new MessageDTO
                 (
                      currUser.Id,

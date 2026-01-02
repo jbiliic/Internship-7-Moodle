@@ -88,12 +88,13 @@ namespace Moodle.Presentation.Menus.Professor
                 Helper.Helper.clearDisplAndDisplMessage("Wow,such empty");
                 return;
             }
+            var students = new List<UserDTO>(res.Value.Items.OrderBy(s => s.Email));
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("All Students:");
                 var number = 1;
-                foreach (var student in res.Value.Items.OrderBy(s => s.Email))
+                foreach (var student in students)
                 {
                     Console.WriteLine($"{number++}. {student.FirstName} ({student.Email})");
                 }
@@ -104,11 +105,12 @@ namespace Moodle.Presentation.Menus.Professor
                     Helper.Helper.clearDisplAndDisplMessage("Invalid option. Please try again.");
                     continue;
                 }
-                var selectedStudent = res.Value.Items.OrderBy(s => s.Email).ElementAt(input - 1);
+                var selectedStudent = students.ElementAt(input - 1);
                 var addRes = await _addStudentHandler.HandleAddStudentAsync(selectedStudent.Id, course.Id);
                 if (addRes.Value.IsSuccess)
                 {
                     Helper.Helper.clearDisplAndDisplMessage($"Student {selectedStudent.FirstName} added to course {course.Name} successfully.");
+                    students.RemoveAt(input - 1);
                 }
                 else
                 {
@@ -116,7 +118,9 @@ namespace Moodle.Presentation.Menus.Professor
                 }
             }
         }
-        private async Task AddNotifs(UserDTO currUser, CourseDTO course) { 
+        private async Task AddNotifs(UserDTO currUser, CourseDTO course) 
+        { 
+            Console.Clear();
             var title = Helper.Helper.getStringOptional("notification title");
             var content = Helper.Helper.getStringOptional("notification content");
             var res = await _addNotifAndMatsHandler.HandleAddNotificationAsync(new CourseNotifDTO { Title = title, Content = content }, course.Id, currUser.Id);
@@ -131,6 +135,7 @@ namespace Moodle.Presentation.Menus.Professor
         }
         private async Task AddMats(UserDTO currUser, CourseDTO course)
         {
+            Console.Clear();
             var title = Helper.Helper.getStringOptional("material title");
             var url = Helper.Helper.getStringOptional("material url");
             var res = await _addNotifAndMatsHandler.HandleAddMatsAsync(new MaterialsDTO { Title = title, FilePath = url }, course.Id, currUser.Id);

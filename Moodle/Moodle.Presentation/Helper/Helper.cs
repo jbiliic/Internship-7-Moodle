@@ -124,7 +124,7 @@ namespace Moodle.Presentation.Helper
             Console.Clear();
             if (notifs.isEmpty)
             {
-                Console.WriteLine("So empty...");
+                clearDisplAndDisplMessage("So empty...");
                 return;
             }
             foreach (var notif in notifs.Items)
@@ -138,7 +138,7 @@ namespace Moodle.Presentation.Helper
             Console.Clear();
             if (mats.isEmpty)
             {
-                Console.WriteLine("So empty...");
+                clearDisplAndDisplMessage("So empty...");
                 return;
             }
             foreach (var mat in mats.Items)

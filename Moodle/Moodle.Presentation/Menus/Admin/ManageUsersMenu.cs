@@ -70,7 +70,7 @@ namespace Moodle.Presentation.Menus.Admin
                 Helper.Helper.clearDisplAndDisplMessage("No users found to delete.");
                 return;
             }
-            var users = new List<UserDTO>(res.Value.Items);
+            var users = new List<UserDTO>(res.Value.Items.OrderBy(s => s.Email));
             while (true)
             {
                 Console.Clear();

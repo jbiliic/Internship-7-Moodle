@@ -23,13 +23,10 @@ internal class Program
             .AddApplication()
             .AddPresentation();
 
-        // Build provider
         using var provider = services.BuildServiceProvider();
 
-        // Create a scope (VERY IMPORTANT)
         using var scope = provider.CreateScope();
 
-        // Resolve your entry handler
         var menu = scope.ServiceProvider.GetRequiredService<LoginMenu>();
         await menu.ShowAsync(null);
     }
